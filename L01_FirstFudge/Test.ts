@@ -1,10 +1,13 @@
 namespace L01_FirstFudge {
   import ƒ = FudgeCore;
   window.addEventListener("load", init);
+  let node: ƒ.Node = new ƒ.Node("Test");
+  let viewport: ƒ.Viewport = new ƒ.Viewport();
 
   function init(_event: Event): void {
-    let node: ƒ.Node = new ƒ.Node("Test");
     const canvas: HTMLCanvasElement = document.querySelector("canvas");
+
+    node.addComponent(new ƒ.ComponentTransform());
 
     let mesh: ƒ.MeshQuad = new ƒ.MeshQuad("Quad");
     node.addComponent(new ƒ.ComponentMesh(mesh));
@@ -16,10 +19,20 @@ namespace L01_FirstFudge {
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.mtxPivot.translateZ(3);
     cmpCamera.mtxPivot.rotateY(180);
-    console.log(cmpCamera);
+    // console.log(cmpCamera);
 
-    let viewport: ƒ.Viewport = new ƒ.Viewport();
     viewport.initialize("Viewport", node, cmpCamera, canvas);
+    viewport.draw();
+    
+    ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
+    ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
+  }
+  
+  function update(_event: Event): void {
+    // console.log(_event);
+    let rotSpeed: number = 90;
+    let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;
+    node.getComponent(ƒ.ComponentMesh).mtxPivot.rotateZ(rotSpeed * secondsSinceLastFrame);
     viewport.draw();
   }
 }
