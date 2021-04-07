@@ -9,7 +9,7 @@ namespace L02_SpaceInvaders {
     // [09][10][11](XY)[12][13][14]
     // [15][16]            [17][18]
     // [19][20]            [21][22]
-    //(XY) = Node Zero
+    // (XY) = Node Zero
 
     export class Cover extends ƒ.Node {
         constructor(_x: number, _y: number, _num: number) {
