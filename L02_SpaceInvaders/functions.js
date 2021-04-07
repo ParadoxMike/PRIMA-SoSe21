@@ -1,6 +1,7 @@
 "use strict";
 var L02_SpaceInvaders;
 (function (L02_SpaceInvaders) {
+    var ƒ = FudgeCore;
     function createCovers(coversNode) {
         let xPos = [-6, -2, 2, 6];
         let yPos = 2;
@@ -27,5 +28,14 @@ var L02_SpaceInvaders;
         }
     }
     L02_SpaceInvaders.createInvaders = createInvaders;
+    function handlePlayerMovement(player) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT])) {
+            player.mtxLocal.translateX(-L02_SpaceInvaders.playerOffset);
+        }
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT])) {
+            player.mtxLocal.translateX(+L02_SpaceInvaders.playerOffset);
+        }
+    }
+    L02_SpaceInvaders.handlePlayerMovement = handlePlayerMovement;
 })(L02_SpaceInvaders || (L02_SpaceInvaders = {}));
 //# sourceMappingURL=functions.js.map
