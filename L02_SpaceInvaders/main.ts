@@ -20,20 +20,15 @@ namespace L02_SpaceInvaders {
         
         //define world object and entity nodes
         let player: ƒ.Node = new Player(0, 0);
-        let boss: ƒ.Node = new Boss(0, 10);
+        let boss: ƒ.Node = new Boss(0, 12);
         let coversNode: ƒ.Node = new ƒ.Node("coversNode");
+        createCovers(coversNode);
         let invadersNode: ƒ.Node = new ƒ.Node("invadersNode");
+        createInvaders(invadersNode);
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
-        let cover01: ƒ.Node = new Cover(-6, 2, 1);
-        let cover02: ƒ.Node = new Cover(-2, 2, 1);
-        let cover03: ƒ.Node = new Cover(2, 2, 1);
-        let cover04: ƒ.Node = new Cover(6, 2, 1);
-        coversNode.appendChild(cover01);
-        coversNode.appendChild(cover02);
-        coversNode.appendChild(cover03);
-        coversNode.appendChild(cover04);
+
     
         //append world and entity nodes to main nodes
         worldNode.addChild(coversNode);
@@ -49,8 +44,8 @@ namespace L02_SpaceInvaders {
 
         //define and possition camera
         let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-        cmpCamera.mtxPivot.translateZ(18);
-        cmpCamera.mtxPivot.translateY(6);
+        cmpCamera.mtxPivot.translateZ(20);
+        cmpCamera.mtxPivot.translateY(6.5);
         cmpCamera.mtxPivot.rotateY(180);
 
         console.log(boss);
