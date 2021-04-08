@@ -2,20 +2,22 @@ namespace L02_SpaceInvaders {
     import ƒ = FudgeCore;
     window.addEventListener("load", init);
     
-    let gameSpeed: number = 10;
-    
     //define globally used stuff
+    export let gameSpeed: number = 10;
     export let quadMesh: ƒ.MeshQuad = new ƒ.MeshQuad("quadMesh");
     export let materialWhite: ƒ.Material = new ƒ.Material("materialWhite", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(1, 1, 1, 1)));
     export let materialGreen: ƒ.Material = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
-    export let playerOffset: number;
-
+    export let materialRed: ƒ.Material = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(1, 0, 0, 1)));
+    export let playerFiring: boolean = false;
+    
     //define world object and entity nodes
     let player: Player;
     let boss: Boss;
     let coversNode: ƒ.Node;
     let invadersNode: ƒ.Node;
-
+    let playerProjectileNode: ƒ.Node;
+    
+    //used in whole file
     let viewport: ƒ.Viewport = new ƒ.Viewport();
 
     function init(_event: Event): void {
@@ -36,12 +38,16 @@ namespace L02_SpaceInvaders {
         createCovers(coversNode);
         invadersNode = new ƒ.Node("invadersNode");
         createInvaders(invadersNode);
+        playerProjectileNode = new ƒ.Node("playerProjectileNode");
     
         //append world and entity nodes to main nodes
         worldNode.addChild(coversNode);
         entityNode.addChild(player);
         entityNode.addChild(boss);
         entityNode.addChild(invadersNode);
+        entityNode.addChild(playerProjectileNode);
+
+        // entityNode.addChild(new Projectile(5, 0, "test"));
 
         //append main nodes to master node
         masterNode.addChild(worldNode);
@@ -63,9 +69,10 @@ namespace L02_SpaceInvaders {
     }
 
     function loop(_event: Event): void {
-        playerOffset = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+        let playerMovementCurrent: number = player.mtxLocal.translation.x;
 
-        handlePlayerMovement(player);
+        handlePlayerMovement(player, playerMovementCurrent);
+        handlePlayerProjectile(playerProjectileNode, playerMovementCurrent);
 
         viewport.draw();
     }

@@ -30,14 +30,39 @@ namespace L02_SpaceInvaders {
         }
     }
 
-    export function handlePlayerMovement(player: Player): void {
+    export function handlePlayerMovement(player: Player, playerMovementCurrent: number): void {
+        let playerOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+        let playerMovementMax: number = 8.5;
 
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT])) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -playerMovementMax) {
             player.mtxLocal.translateX(-playerOffset);
         }
 
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT])) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= playerMovementMax) {
             player.mtxLocal.translateX(+playerOffset);
+        }
+    }
+
+    export function handlePlayerProjectile(playerProjectileNode: ƒ.Node, playerMovementCurrent: number): void {
+        let playerProjectilePosMax: number = 13.5;
+        let projectileOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 500;
+        
+        //create new projectile
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE]) && !playerFiring) {
+            playerProjectileNode.addChild(new Projectile(playerMovementCurrent, 0, "Player"));
+            playerFiring = true;
+        }
+
+        if (playerFiring) {
+            //remove projectile
+            if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
+                playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
+                playerFiring = false;
+            }
+            //move projectile
+            else {
+                playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+            }
         }
     }
 }

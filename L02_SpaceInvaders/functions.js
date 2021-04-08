@@ -28,14 +28,37 @@ var L02_SpaceInvaders;
         }
     }
     L02_SpaceInvaders.createInvaders = createInvaders;
-    function handlePlayerMovement(player) {
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT])) {
-            player.mtxLocal.translateX(-L02_SpaceInvaders.playerOffset);
+    function handlePlayerMovement(player, playerMovementCurrent) {
+        let playerOffset = L02_SpaceInvaders.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+        let playerMovementMax = 8.5;
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -playerMovementMax) {
+            player.mtxLocal.translateX(-playerOffset);
         }
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT])) {
-            player.mtxLocal.translateX(+L02_SpaceInvaders.playerOffset);
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= playerMovementMax) {
+            player.mtxLocal.translateX(+playerOffset);
         }
     }
     L02_SpaceInvaders.handlePlayerMovement = handlePlayerMovement;
+    function handlePlayerProjectile(playerProjectileNode, playerMovementCurrent) {
+        let playerProjectilePosMax = 13.5;
+        let projectileOffset = L02_SpaceInvaders.gameSpeed * ƒ.Loop.timeFrameReal / 500;
+        //create new projectile
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE]) && !L02_SpaceInvaders.playerFiring) {
+            playerProjectileNode.addChild(new L02_SpaceInvaders.Projectile(playerMovementCurrent, 0, "Player"));
+            L02_SpaceInvaders.playerFiring = true;
+        }
+        if (L02_SpaceInvaders.playerFiring) {
+            //remove projectile
+            if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
+                playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
+                L02_SpaceInvaders.playerFiring = false;
+            }
+            //move projectile
+            else {
+                playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+            }
+        }
+    }
+    L02_SpaceInvaders.handlePlayerProjectile = handlePlayerProjectile;
 })(L02_SpaceInvaders || (L02_SpaceInvaders = {}));
 //# sourceMappingURL=functions.js.map
