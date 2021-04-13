@@ -44,6 +44,7 @@ namespace L02_SpaceInvaders {
 
         public handleAllInvadersMovement(): void {
             let invaders: Invader[] = this.getChildren() as Invader[];
+            let invaderOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 5000;
 
             for (let i = 0; i < invaders.length; i++) {
                 if (invaders[i].mtxLocal.translation.x <= -movementBorderX) {
@@ -60,13 +61,13 @@ namespace L02_SpaceInvaders {
                 if (!this.hitBorderRight) {
                     // to left
                     for (let i = 0; i < invaders.length; i++) {
-                        invaders[i].moveNode(-0.1, 0);
+                        invaders[i].moveNode(-invaderOffset, 0);
                     }
                 }
                 else {
                     // to left & down
                     for (let i = 0; i < invaders.length; i++) {
-                        invaders[i].moveNode(-0.1, -0.1);
+                        invaders[i].moveNode(-invaderOffset, -invaderOffset);
                     }
                     this.hitBorderRight = false;
                 }
@@ -75,13 +76,13 @@ namespace L02_SpaceInvaders {
                 if (!this.hitBorderLeft) {
                     //to right
                     for (let i = 0; i < invaders.length; i++) {
-                        invaders[i].moveNode(0.1, 0);
+                        invaders[i].moveNode(invaderOffset, 0);
                     }
                 }
                 else {
                     //to right & down
                     for (let i = 0; i < invaders.length; i++) {
-                        invaders[i].moveNode(0.1, -0.1);
+                        invaders[i].moveNode(invaderOffset, -invaderOffset);
                     }
                     this.hitBorderLeft = false;
                 }
