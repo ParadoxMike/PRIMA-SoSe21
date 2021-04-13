@@ -11,23 +11,6 @@ var L02_SpaceInvaders;
         }
     }
     L02_SpaceInvaders.createCovers = createCovers;
-    function createInvaders(invadersNode) {
-        // iterates for every invader
-        let xPos = [-7.5, -6, -4.5, -3, -1.5, 0, 1.5, 3, 4.5, 6, 7.5];
-        // iterates for every row
-        let yPos = [10, 8.5, 7, 5.5];
-        let rowCnt = 4;
-        let cntPerRow = 11;
-        let cnt = 0;
-        for (let i = 0; i < rowCnt; i++) {
-            for (let k = 0; k < cntPerRow; k++) {
-                let invader = new L02_SpaceInvaders.Invader(xPos[k], yPos[i], cnt);
-                invadersNode.appendChild(invader);
-                cnt++;
-            }
-        }
-    }
-    L02_SpaceInvaders.createInvaders = createInvaders;
     function handlePlayerMovement(player, playerMovementCurrent) {
         let playerOffset = L02_SpaceInvaders.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
         let playerMovementMax = 8.5;
@@ -48,14 +31,21 @@ var L02_SpaceInvaders;
             L02_SpaceInvaders.playerFiring = true;
         }
         if (L02_SpaceInvaders.playerFiring) {
-            //remove projectile
+            let playerProjectile = playerProjectileNode.getChild(0);
+            //remove projectile when out of screen
             if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
                 playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
                 L02_SpaceInvaders.playerFiring = false;
             }
+            //remove projectile when invader hit
+            else if (L02_SpaceInvaders.invadersNode.handleAllInvadersHit(playerProjectile)) {
+                playerProjectileNode.removeChild(playerProjectile);
+                L02_SpaceInvaders.playerFiring = false;
+            }
             //move projectile
             else {
-                playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+                // playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+                playerProjectile.moveNode(0, projectileOffset);
             }
         }
     }

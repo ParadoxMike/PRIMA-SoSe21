@@ -11,25 +11,6 @@ namespace L02_SpaceInvaders {
         }
     }
 
-    export function createInvaders(invadersNode: ƒ.Node): void {
-        // iterates for every invader
-        let xPos:       number[] = [-7.5, -6, -4.5, -3, -1.5, 0, 1.5, 3, 4.5, 6, 7.5];
-        // iterates for every row
-        let yPos:       number[] = [10, 8.5, 7, 5.5];
-
-        let rowCnt:     number   = 4;
-        let cntPerRow:  number   = 11;
-        let cnt:        number   = 0;
-
-        for (let i: number = 0; i < rowCnt; i++) {
-            for (let k: number = 0; k < cntPerRow; k++) {
-                let invader: ƒ.Node = new Invader(xPos[k], yPos[i], cnt);
-                invadersNode.appendChild(invader);
-                cnt++;
-            }
-        }
-    }
-
     export function handlePlayerMovement(player: Player, playerMovementCurrent: number): void {
         let playerOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
         let playerMovementMax: number = 8.5;
@@ -54,14 +35,22 @@ namespace L02_SpaceInvaders {
         }
 
         if (playerFiring) {
-            //remove projectile
+            let playerProjectile: Projectile = playerProjectileNode.getChild(0) as Projectile;
+
+            //remove projectile when out of screen
             if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
                 playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
                 playerFiring = false;
             }
+            //remove projectile when invader hit
+            else if (invadersNode.handleAllInvadersHit(playerProjectile)) {
+                playerProjectileNode.removeChild(playerProjectile);
+                playerFiring = false;
+            }
             //move projectile
             else {
-                playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+                // playerProjectileNode.getChild(0).mtxLocal.translateY(projectileOffset);
+                playerProjectile.moveNode(0, projectileOffset);
             }
         }
     }

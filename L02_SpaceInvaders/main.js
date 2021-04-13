@@ -14,7 +14,6 @@ var L02_SpaceInvaders;
     let player;
     let boss;
     let coversNode;
-    let invadersNode;
     let playerProjectileNode;
     //used in whole file
     let viewport = new ƒ.Viewport();
@@ -31,14 +30,14 @@ var L02_SpaceInvaders;
         boss = new L02_SpaceInvaders.Boss(0, 12);
         coversNode = new ƒ.Node("coversNode");
         L02_SpaceInvaders.createCovers(coversNode);
-        invadersNode = new ƒ.Node("invadersNode");
-        L02_SpaceInvaders.createInvaders(invadersNode);
+        L02_SpaceInvaders.invadersNode = new L02_SpaceInvaders.InvadersNode();
+        L02_SpaceInvaders.invadersNode.createInvaders();
         playerProjectileNode = new ƒ.Node("playerProjectileNode");
         //append world and entity nodes to main nodes
         worldNode.addChild(coversNode);
         entityNode.addChild(player);
         entityNode.addChild(boss);
-        entityNode.addChild(invadersNode);
+        entityNode.addChild(L02_SpaceInvaders.invadersNode);
         entityNode.addChild(playerProjectileNode);
         // entityNode.addChild(new Projectile(5, 0, "test"));
         //append main nodes to master node

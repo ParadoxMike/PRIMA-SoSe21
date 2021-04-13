@@ -14,7 +14,7 @@ namespace L02_SpaceInvaders {
     let player: Player;
     let boss: Boss;
     let coversNode: ƒ.Node;
-    let invadersNode: ƒ.Node;
+    export let invadersNode: InvadersNode;
     let playerProjectileNode: ƒ.Node;
     
     //used in whole file
@@ -36,8 +36,8 @@ namespace L02_SpaceInvaders {
         boss = new Boss(0, 12);
         coversNode = new ƒ.Node("coversNode");
         createCovers(coversNode);
-        invadersNode = new ƒ.Node("invadersNode");
-        createInvaders(invadersNode);
+        invadersNode = new InvadersNode();
+        invadersNode.createInvaders();
         playerProjectileNode = new ƒ.Node("playerProjectileNode");
     
         //append world and entity nodes to main nodes
