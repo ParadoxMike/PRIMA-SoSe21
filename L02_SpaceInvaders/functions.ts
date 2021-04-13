@@ -13,13 +13,12 @@ namespace L02_SpaceInvaders {
 
     export function handlePlayerMovement(player: Player, playerMovementCurrent: number): void {
         let playerOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
-        let playerMovementMax: number = 8.5;
 
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -playerMovementMax) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -movementBorderX) {
             player.mtxLocal.translateX(-playerOffset);
         }
 
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= playerMovementMax) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= movementBorderX) {
             player.mtxLocal.translateX(+playerOffset);
         }
     }
@@ -38,8 +37,8 @@ namespace L02_SpaceInvaders {
             let playerProjectile: Projectile = playerProjectileNode.getChild(0) as Projectile;
 
             //remove projectile when out of screen
-            if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
-                playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
+            if (playerProjectile.mtxLocal.translation.y >= playerProjectilePosMax) {
+                playerProjectileNode.removeChild(playerProjectile);
                 playerFiring = false;
             }
             //remove projectile when invader hit

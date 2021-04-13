@@ -10,6 +10,7 @@ var L02_SpaceInvaders;
     L02_SpaceInvaders.materialGreen = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
     L02_SpaceInvaders.materialRed = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(1, 0, 0, 1)));
     L02_SpaceInvaders.playerFiring = false;
+    L02_SpaceInvaders.movementBorderX = 8.5;
     //define world object and entity nodes
     let player;
     let boss;
@@ -59,6 +60,7 @@ var L02_SpaceInvaders;
         let playerMovementCurrent = player.mtxLocal.translation.x;
         L02_SpaceInvaders.handlePlayerMovement(player, playerMovementCurrent);
         L02_SpaceInvaders.handlePlayerProjectile(playerProjectileNode, playerMovementCurrent);
+        L02_SpaceInvaders.invadersNode.handleAllInvadersMovement();
         viewport.draw();
     }
 })(L02_SpaceInvaders || (L02_SpaceInvaders = {}));

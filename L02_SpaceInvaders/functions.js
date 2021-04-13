@@ -13,11 +13,10 @@ var L02_SpaceInvaders;
     L02_SpaceInvaders.createCovers = createCovers;
     function handlePlayerMovement(player, playerMovementCurrent) {
         let playerOffset = L02_SpaceInvaders.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
-        let playerMovementMax = 8.5;
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -playerMovementMax) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT]) && playerMovementCurrent >= -L02_SpaceInvaders.movementBorderX) {
             player.mtxLocal.translateX(-playerOffset);
         }
-        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= playerMovementMax) {
+        if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT]) && playerMovementCurrent <= L02_SpaceInvaders.movementBorderX) {
             player.mtxLocal.translateX(+playerOffset);
         }
     }
@@ -33,8 +32,8 @@ var L02_SpaceInvaders;
         if (L02_SpaceInvaders.playerFiring) {
             let playerProjectile = playerProjectileNode.getChild(0);
             //remove projectile when out of screen
-            if (playerProjectileNode.getChild(0).mtxLocal.translation.y >= playerProjectilePosMax) {
-                playerProjectileNode.removeChild(playerProjectileNode.getChild(0));
+            if (playerProjectile.mtxLocal.translation.y >= playerProjectilePosMax) {
+                playerProjectileNode.removeChild(playerProjectile);
                 L02_SpaceInvaders.playerFiring = false;
             }
             //remove projectile when invader hit

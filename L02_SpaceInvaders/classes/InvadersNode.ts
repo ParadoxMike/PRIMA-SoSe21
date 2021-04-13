@@ -2,6 +2,9 @@ namespace L02_SpaceInvaders {
     import ƒ = FudgeCore;
     
     export class InvadersNode extends ƒ.Node {
+        private movementDirection: boolean = true; //false = to right, true = to left
+        private hitBorderRight: boolean = false;
+        private hitBorderLeft: boolean = false;
 
         constructor() {
             super("InvadersNode");
@@ -37,6 +40,52 @@ namespace L02_SpaceInvaders {
                 }
             }
             return false;
+        }
+
+        public handleAllInvadersMovement(): void {
+            let invaders: Invader[] = this.getChildren() as Invader[];
+
+            for (let i = 0; i < invaders.length; i++) {
+                if (invaders[i].mtxLocal.translation.x <= -movementBorderX) {
+                    this.hitBorderLeft = true;
+                    this.movementDirection = false;
+                }
+                else if (invaders[i].mtxLocal.translation.x >= movementBorderX) {
+                    this.hitBorderRight = true;
+                    this.movementDirection = true;
+                }
+            }
+
+            if (this.movementDirection && !this.hitBorderLeft) {
+                if (!this.hitBorderRight) {
+                    // to left
+                    for (let i = 0; i < invaders.length; i++) {
+                        invaders[i].moveNode(-0.1, 0);
+                    }
+                }
+                else {
+                    // to left & down
+                    for (let i = 0; i < invaders.length; i++) {
+                        invaders[i].moveNode(-0.1, -0.1);
+                    }
+                    this.hitBorderRight = false;
+                }
+            }
+            else if (!this.movementDirection && !this.hitBorderRight){
+                if (!this.hitBorderLeft) {
+                    //to right
+                    for (let i = 0; i < invaders.length; i++) {
+                        invaders[i].moveNode(0.1, 0);
+                    }
+                }
+                else {
+                    //to right & down
+                    for (let i = 0; i < invaders.length; i++) {
+                        invaders[i].moveNode(0.1, -0.1);
+                    }
+                    this.hitBorderLeft = false;
+                }
+            }
         }
     }
 }

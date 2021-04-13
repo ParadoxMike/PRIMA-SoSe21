@@ -9,6 +9,7 @@ namespace L02_SpaceInvaders {
     export let materialGreen: ƒ.Material = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
     export let materialRed: ƒ.Material = new ƒ.Material("materialGreen", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(1, 0, 0, 1)));
     export let playerFiring: boolean = false;
+    export const movementBorderX: number = 8.5;
     
     //define world object and entity nodes
     let player: Player;
@@ -73,6 +74,8 @@ namespace L02_SpaceInvaders {
 
         handlePlayerMovement(player, playerMovementCurrent);
         handlePlayerProjectile(playerProjectileNode, playerMovementCurrent);
+
+        invadersNode.handleAllInvadersMovement();
 
         viewport.draw();
     }
