@@ -18,8 +18,8 @@ var L02_SpaceInvaders;
         moveNode(_x, _y) {
             this.mtxLocal.translateX(_x);
             this.mtxLocal.translateY(_y);
-            this.hitRect.position.x = this.mtxLocal.translation.x;
-            this.hitRect.position.y = this.mtxLocal.translation.y;
+            this.hitRect.position.x = this.mtxLocal.translation.x - this.hitRect.size.x / 2;
+            this.hitRect.position.y = this.mtxLocal.translation.y - this.hitRect.size.y / 2;
         }
     }
     L02_SpaceInvaders.BasicHitboxNode = BasicHitboxNode;

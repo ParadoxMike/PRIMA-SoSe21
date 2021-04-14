@@ -23,8 +23,8 @@ namespace L02_SpaceInvaders {
         public moveNode(_x: number, _y: number): void {
             this.mtxLocal.translateX(_x);
             this.mtxLocal.translateY(_y);
-            this.hitRect.position.x = this.mtxLocal.translation.x;
-            this.hitRect.position.y = this.mtxLocal.translation.y;
+            this.hitRect.position.x = this.mtxLocal.translation.x - this.hitRect.size.x / 2;
+            this.hitRect.position.y = this.mtxLocal.translation.y - this.hitRect.size.y / 2;
         }
     }
 }
