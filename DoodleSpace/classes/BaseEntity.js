@@ -3,9 +3,8 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     //Basic class for moveable and textured Nodes with a Hitbox - is the base for every enemy and the player
-    //TODO: Add Texture functionallitiy to replace basic Color
     class BaseEntity extends ƒ.Node {
-        constructor(_name, _color, _spawnAtX, _spawnAtY, _xScale, _yScale) {
+        constructor(_spawnAtX, _spawnAtY, _xScale, _yScale, _name, _texturePath = "./textures/default.png") {
             super(_name);
             //add transform component and move into possiton
             this.addComponent(new ƒ.ComponentTransform());
@@ -14,8 +13,20 @@ var DoodleSpace;
             //create and add an mesh
             let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad("Quad"));
             this.addComponent(cmpMesh);
-            //add color - to be replaced with texture!
-            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name + "Material", ƒ.ShaderUniColor, new ƒ.CoatColored(_color))));
+            //add and load texture
+            let texture = new ƒ.TextureImage();
+            let textureCoat = new ƒ.CoatTextured();
+            let material = new ƒ.Material(_name + "Material", ƒ.ShaderTexture, textureCoat);
+            let cmpMaterial = new ƒ.ComponentMaterial(material);
+            texture.load(_texturePath);
+            textureCoat.texture = texture;
+            //fix texture 
+            cmpMaterial.mtxPivot = ƒ.Matrix3x3.PROJECTION(-2, -2);
+            cmpMaterial.mtxPivot.rotate(180);
+            cmpMaterial.mtxPivot.translateX(0.5);
+            cmpMaterial.mtxPivot.translateY(0.5);
+            //add textured material to node
+            this.addComponent(cmpMaterial);
             //add and possition hitbox
             this.hitbox = new ƒ.Rectangle(_spawnAtX, _spawnAtY, _xScale, _yScale, ƒ.ORIGIN2D.CENTER);
         }
@@ -27,9 +38,6 @@ var DoodleSpace;
             this.mtxLocal.translateY(_y);
             this.hitbox.position.x = this.mtxLocal.translation.x - this.hitbox.size.x / 2;
             this.hitbox.position.y = this.mtxLocal.translation.y - this.hitbox.size.y / 2;
-            console.log(_x);
-            console.log(this.mtxLocal.translation.x);
-            console.log(this.mtxWorld.translation.x);
         }
         moveTo(_x, _y) {
             this.mtxLocal.translateX(_x - this.mtxLocal.translation.x);

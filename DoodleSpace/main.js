@@ -10,11 +10,12 @@ var DoodleSpace;
     function init(_event) {
         background = new DoodleSpace.Background();
         player = new DoodleSpace.Player(-10, 0);
-        player.moveBy(-1, 0);
         const canvas = document.querySelector("canvas");
         // worldNode.addChild(Quad);
+        worldNode.addChild(DoodleSpace.generateDummy());
         worldNode.addChild(background);
         worldNode.addChild(player);
+        console.log(worldNode);
         // Quad.addComponent(new ƒ.ComponentTransform());
         // Quad.addComponent(new ƒ.ComponentMesh(meshQuad));
         // let material: ƒ.Material = new ƒ.Material("Florian", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
@@ -26,8 +27,6 @@ var DoodleSpace;
         // console.log(cmpCamera);
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
-        console.log(player.mtxWorld.translation.x);
-        console.log(player.mtxLocal.translation.x);
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
     }

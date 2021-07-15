@@ -12,14 +12,15 @@ namespace DoodleSpace {
 
         background = new Background();
         player = new Player(-10, 0);
-        player.moveBy(-1, 0);
 
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
         // worldNode.addChild(Quad);
+        worldNode.addChild(generateDummy());
         worldNode.addChild(background);
         worldNode.addChild(player);
+        console.log(worldNode);
         
         // Quad.addComponent(new ƒ.ComponentTransform());
 
@@ -36,8 +37,6 @@ namespace DoodleSpace {
 
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
-        console.log(player.mtxWorld.translation.x);
-        console.log(player.mtxLocal.translation.x);
 
         
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
