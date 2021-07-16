@@ -17,7 +17,7 @@ namespace DoodleSpace {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
         // worldNode.addChild(Quad);
-        worldNode.addChild(generateDummy());
+        // worldNode.addChild(generateDummy());
         worldNode.addChild(background);
         worldNode.addChild(player);
         console.log(worldNode);

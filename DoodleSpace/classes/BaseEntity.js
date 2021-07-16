@@ -14,17 +14,11 @@ var DoodleSpace;
             let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad("Quad"));
             this.addComponent(cmpMesh);
             //add and load texture
-            let texture = new ƒ.TextureImage();
+            let texture = new ƒ.TextureImage(_texturePath);
             let textureCoat = new ƒ.CoatTextured();
+            textureCoat.texture = texture;
             let material = new ƒ.Material(_name + "Material", ƒ.ShaderTexture, textureCoat);
             let cmpMaterial = new ƒ.ComponentMaterial(material);
-            texture.load(_texturePath);
-            textureCoat.texture = texture;
-            //fix texture 
-            cmpMaterial.mtxPivot = ƒ.Matrix3x3.PROJECTION(-2, -2);
-            cmpMaterial.mtxPivot.rotate(180);
-            cmpMaterial.mtxPivot.translateX(0.5);
-            cmpMaterial.mtxPivot.translateY(0.5);
             //add textured material to node
             this.addComponent(cmpMaterial);
             //add and possition hitbox

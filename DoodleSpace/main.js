@@ -12,7 +12,7 @@ var DoodleSpace;
         player = new DoodleSpace.Player(0, 0);
         const canvas = document.querySelector("canvas");
         // worldNode.addChild(Quad);
-        worldNode.addChild(DoodleSpace.generateDummy());
+        // worldNode.addChild(generateDummy());
         worldNode.addChild(background);
         worldNode.addChild(player);
         console.log(worldNode);

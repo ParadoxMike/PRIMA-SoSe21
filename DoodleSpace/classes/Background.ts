@@ -15,18 +15,11 @@ namespace DoodleSpace {
             this.addComponent(cmpMesh);
             
             //add and load texture
-            let texture: ƒ.TextureImage = new ƒ.TextureImage();
+            let texture: ƒ.TextureImage = new ƒ.TextureImage("./textures/bg.jpg");
             let textureCoat: ƒ.CoatTextured = new ƒ.CoatTextured();
+            textureCoat.texture = texture;
             let backgroundMaterial: ƒ.Material = new ƒ.Material("Background Material", ƒ.ShaderTexture, textureCoat);
             let cmpBackgroundMaterial: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(backgroundMaterial);
-            texture.load("./textures/bg.jpg");
-            textureCoat.texture = texture;
-            
-            //fix texture 
-            cmpBackgroundMaterial.mtxPivot = ƒ.Matrix3x3.PROJECTION(-2, -2);
-            cmpBackgroundMaterial.mtxPivot.rotate(180);
-            cmpBackgroundMaterial.mtxPivot.translateX(0.5);
-            cmpBackgroundMaterial.mtxPivot.translateY(0.5);
             
             //add textured material to node
             this.addComponent(cmpBackgroundMaterial);
