@@ -8,6 +8,7 @@ var DoodleSpace;
             //add transform component and move background into possiton
             this.addComponent(new ƒ.ComponentTransform());
             this.mtxLocal.translateZ(-0.1);
+            this.mtxLocal.translateX(17);
             //create and add a mesh
             let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad("Quad"));
             this.addComponent(cmpMesh);

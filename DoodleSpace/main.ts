@@ -11,7 +11,7 @@ namespace DoodleSpace {
     function init(_event: Event): void {
 
         background = new Background();
-        player = new Player(-10, 0);
+        player = new Player(0, 0);
 
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -32,6 +32,7 @@ namespace DoodleSpace {
 
         let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
         cmpCamera.mtxPivot.translateZ(35);
+        cmpCamera.mtxPivot.translateX(16.8);
         cmpCamera.mtxPivot.rotateY(180);
         // console.log(cmpCamera);
 

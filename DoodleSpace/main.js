@@ -9,7 +9,7 @@ var DoodleSpace;
     let viewport = new ƒ.Viewport();
     function init(_event) {
         background = new DoodleSpace.Background();
-        player = new DoodleSpace.Player(-10, 0);
+        player = new DoodleSpace.Player(0, 0);
         const canvas = document.querySelector("canvas");
         // worldNode.addChild(Quad);
         worldNode.addChild(DoodleSpace.generateDummy());
@@ -23,6 +23,7 @@ var DoodleSpace;
         // Quad.addComponent(cmpMaterial);
         let cmpCamera = new ƒ.ComponentCamera();
         cmpCamera.mtxPivot.translateZ(35);
+        cmpCamera.mtxPivot.translateX(16.8);
         cmpCamera.mtxPivot.rotateY(180);
         // console.log(cmpCamera);
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
