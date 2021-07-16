@@ -26,13 +26,13 @@ namespace DoodleSpace {
             cmpBackgroundMaterial.mtxPivot.rotate(180);
             cmpBackgroundMaterial.mtxPivot.translateX(0.5);
             cmpBackgroundMaterial.mtxPivot.translateY(0.5);
+            
+            //add textured material to node
+            this.addComponent(cmpBackgroundMaterial);
 
             //scale background Mesh
             this.getComponent(ƒ.ComponentMesh).mtxPivot.scaleX(34);
             this.getComponent(ƒ.ComponentMesh).mtxPivot.scaleY(26);
-            
-            //add textured material to node
-            this.addComponent(cmpBackgroundMaterial);
         }
     }
 }
