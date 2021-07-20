@@ -6,12 +6,18 @@ namespace DoodleSpace {
     let background: Background;
     let player: Player;
     
+    let ufo: EnemyType01;
+    let aseroid: EnemyType00;
+    
     let viewport: ƒ.Viewport = new ƒ.Viewport();
     
     function init(_event: Event): void {
 
         background = new Background();
-        player = new Player(0, 0);
+        player = new Player(2, 0);
+
+        ufo = new EnemyType01(0, 6, 3);
+        aseroid = new EnemyType00(0, 9, -4);
 
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -20,6 +26,8 @@ namespace DoodleSpace {
         // worldNode.addChild(generateDummy());
         worldNode.addChild(background);
         worldNode.addChild(player);
+        worldNode.addChild(ufo);
+        worldNode.addChild(aseroid);
         console.log(worldNode);
         
         // Quad.addComponent(new ƒ.ComponentTransform());
@@ -48,7 +56,7 @@ namespace DoodleSpace {
         // console.log(_event);
         // let rotSpeed: number = 90;
         // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;
-        // Quad.getComponent(ƒ.ComponentMesh).mtxPivot.rotateZ(rotSpeed * secondsSinceLastFrame);
+        // player.getComponent(ƒ.ComponentMesh).mtxPivot.rotateZ(rotSpeed * secondsSinceLastFrame);
         viewport.draw();
     }
 }

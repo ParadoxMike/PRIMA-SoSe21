@@ -13,9 +13,11 @@ namespace DoodleSpace {
             this.mtxLocal.translateX(_spawnAtX);
             this.mtxLocal.translateY(_spawnAtY);
 
-            //create and add an mesh
+            //create, add and scale mesh
             let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad("Quad"));
             this.addComponent(cmpMesh);
+            this.getComponent(ƒ.ComponentMesh).mtxPivot.scaleX(_xScale);
+            this.getComponent(ƒ.ComponentMesh).mtxPivot.scaleY(_yScale);
 
             //add and load texture
             let texture: ƒ.TextureImage = new ƒ.TextureImage(_texturePath);
