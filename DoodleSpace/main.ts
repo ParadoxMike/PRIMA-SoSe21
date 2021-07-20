@@ -8,6 +8,7 @@ namespace DoodleSpace {
     
     let ufo: EnemyType01;
     let aseroid: EnemyType00;
+    let projectile: ProjectilePlayer;
     
     let viewport: ƒ.Viewport = new ƒ.Viewport();
     
@@ -18,6 +19,7 @@ namespace DoodleSpace {
 
         ufo = new EnemyType01(0, 6, 3);
         aseroid = new EnemyType00(0, 9, -4);
+        projectile = new ProjectilePlayer(0, 4, 0);
 
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -28,6 +30,7 @@ namespace DoodleSpace {
         worldNode.addChild(player);
         worldNode.addChild(ufo);
         worldNode.addChild(aseroid);
+        worldNode.addChild(projectile);
         console.log(worldNode);
         
         // Quad.addComponent(new ƒ.ComponentTransform());
