@@ -29,17 +29,17 @@ var DoodleSpace;
         checkCollision(_target) {
             return this.hitbox.collides(_target.hitbox);
         }
-        moveBy(_x, _y) {
-            this.mtxLocal.translateX(_x);
-            this.mtxLocal.translateY(_y);
+        moveBy(_pos) {
+            this.mtxLocal.translateX(_pos.x);
+            this.mtxLocal.translateY(_pos.y);
             this.hitbox.position.x = this.mtxLocal.translation.x - this.hitbox.size.x / 2;
             this.hitbox.position.y = this.mtxLocal.translation.y - this.hitbox.size.y / 2;
         }
-        moveTo(_x, _y) {
-            this.mtxLocal.translateX(_x - this.mtxLocal.translation.x);
-            this.mtxLocal.translateY(_y - this.mtxLocal.translation.y);
-            this.hitbox.position.x = _x - this.hitbox.size.x / 2;
-            this.hitbox.position.y = _y - this.hitbox.size.y / 2;
+        moveTo(_pos) {
+            this.mtxLocal.translateX(_pos.x - this.mtxLocal.translation.x);
+            this.mtxLocal.translateY(_pos.y - this.mtxLocal.translation.y);
+            this.hitbox.position.x = _pos.x - this.hitbox.size.x / 2;
+            this.hitbox.position.y = _pos.y - this.hitbox.size.y / 2;
         }
     }
     DoodleSpace.BaseEntity = BaseEntity;

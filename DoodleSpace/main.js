@@ -3,6 +3,8 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     window.addEventListener("load", init);
+    const fps = 60;
+    DoodleSpace.gameSpeed = 10;
     let worldNode = new ƒ.Node("World Node");
     let background;
     let player;
@@ -12,7 +14,7 @@ var DoodleSpace;
     let viewport = new ƒ.Viewport();
     function init(_event) {
         background = new DoodleSpace.Background();
-        player = new DoodleSpace.Player(2, 0);
+        player = new DoodleSpace.Player(1.5, 0);
         ufo = new DoodleSpace.EnemyType01(0, 6, 3);
         aseroid = new DoodleSpace.EnemyType00(0, 9, -4);
         projectile = new DoodleSpace.ProjectilePlayer(0, 4, 0);
@@ -37,10 +39,11 @@ var DoodleSpace;
         // console.log(cmpCamera);
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
-        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
-        ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
+        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, fps);
+        ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, loop);
     }
-    function update(_event) {
+    function loop(_event) {
+        player.handleMovement();
         // console.log(_event);
         // let rotSpeed: number = 90;
         // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;

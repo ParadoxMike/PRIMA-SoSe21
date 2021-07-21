@@ -2,6 +2,9 @@ namespace DoodleSpace {
     import ƒ = FudgeCore;
     window.addEventListener("load", init);
 
+    const fps: number = 60;
+    export const gameSpeed: number = 10;
+
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let background: Background;
     let player: Player;
@@ -15,7 +18,7 @@ namespace DoodleSpace {
     function init(_event: Event): void {
 
         background = new Background();
-        player = new Player(2, 0);
+        player = new Player(1.5, 0);
 
         ufo = new EnemyType01(0, 6, 3);
         aseroid = new EnemyType00(0, 9, -4);
@@ -51,11 +54,13 @@ namespace DoodleSpace {
         viewport.draw();
 
         
-        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, 60);
-        ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
+        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, fps);
+        ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, loop);
     }
     
-    function update(_event: Event): void {
+    function loop(_event: Event): void {
+        player.handleMovement();
+
         // console.log(_event);
         // let rotSpeed: number = 90;
         // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;
