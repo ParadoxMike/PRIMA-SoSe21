@@ -8,10 +8,10 @@ namespace DoodleSpace {
             super("Player Projectiles");
         }
         
-                private getLastProjectile(): PlayerProjectile {
-                    const projectiles: PlayerProjectile[] = this.getChildren() as PlayerProjectile[];
-                    return this.getChild(projectiles.length - 1) as PlayerProjectile;
-                }
+        private getLastProjectile(): PlayerProjectile {
+            const projectiles: PlayerProjectile[] = this.getChildren() as PlayerProjectile[];
+            return this.getChild(projectiles.length - 1) as PlayerProjectile;
+        }
 
         public spawnProjectilePlayer(playerObject: Player): void {
             if (! this.getLastProjectile()) {
