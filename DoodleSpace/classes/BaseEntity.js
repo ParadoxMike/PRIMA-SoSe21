@@ -41,6 +41,9 @@ var DoodleSpace;
             this.hitbox.position.x = _pos.x - this.hitbox.size.x / 2;
             this.hitbox.position.y = _pos.y - this.hitbox.size.y / 2;
         }
+        getPos() {
+            return new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
+        }
     }
     DoodleSpace.BaseEntity = BaseEntity;
 })(DoodleSpace || (DoodleSpace = {}));

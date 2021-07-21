@@ -5,9 +5,32 @@ var DoodleSpace;
     class PlayerProjectiles extends ƒ.Node {
         constructor() {
             super("Player Projectiles");
+            this.deleteAt = 33;
+        }
+        getLastProjectile() {
+            const projectiles = this.getChildren();
+            return this.getChild(projectiles.length - 1);
         }
         spawnProjectilePlayer(playerObject) {
-            this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+            if (!this.getLastProjectile()) {
+                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+            }
+            else if (this.getLastProjectile().mtxLocal.translation.x > playerObject.mtxLocal.translation.x + 3) {
+                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+            }
+        }
+        handleMovement() {
+            let projectiles = this.getChildren();
+            for (let i = 0; i < projectiles.length; i++) {
+                const projectileOffset = DoodleSpace.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+                const projectilePos = projectiles[i].getPos();
+                if (projectilePos.x >= this.deleteAt) {
+                    this.removeChild(projectiles[i]);
+                }
+                else {
+                    projectiles[i].moveBy(new ƒ.Vector2(projectileOffset, 0));
+                }
+            }
         }
     }
     DoodleSpace.PlayerProjectiles = PlayerProjectiles;

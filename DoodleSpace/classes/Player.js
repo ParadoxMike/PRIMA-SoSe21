@@ -12,7 +12,7 @@ var DoodleSpace;
         }
         handleMovement() {
             const playerOffset = DoodleSpace.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
-            const playerPos = new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
+            const playerPos = this.getPos();
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A]) && playerPos.x >= this.movementBorderLeft) {
                 this.moveBy(new ƒ.Vector2(-playerOffset, 0));
             }

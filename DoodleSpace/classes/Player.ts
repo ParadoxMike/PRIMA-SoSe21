@@ -13,7 +13,7 @@ namespace DoodleSpace {
 
         public handleMovement(): void {
             const playerOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
-            const playerPos: ƒ.Vector2 = new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
+            const playerPos: ƒ.Vector2 = this.getPos();
 
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A]) && playerPos.x >= this.movementBorderLeft) {
                 this.moveBy(new ƒ.Vector2(-playerOffset , 0));
