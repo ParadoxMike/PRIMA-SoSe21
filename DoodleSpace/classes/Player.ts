@@ -31,5 +31,11 @@ namespace DoodleSpace {
                 this.moveBy(new ƒ.Vector2(0 , -playerOffset));
             }
         }
+
+        public handleFiring (projectiles: PlayerProjectiles): void {
+            if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
+                projectiles.spawnProjectilePlayer(this);
+            }
+        }
     }
 }
