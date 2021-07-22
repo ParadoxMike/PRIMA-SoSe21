@@ -3,19 +3,19 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     window.addEventListener("load", init);
-    const fps = 60;
-    const gameSpeed = 10;
-    let counter = 0;
-    let spawner = new DoodleSpace.Spawner();
+    let settings;
+    let spawner;
     let worldNode = new ƒ.Node("World Node");
     let playerProjectiles = new DoodleSpace.PlayerProjectiles();
     let enemies = new DoodleSpace.Enemies();
     let background;
     let player;
     let viewport = new ƒ.Viewport();
-    function init(_event) {
+    async function init(_event) {
+        settings = await (await fetch("./settings.json")).json();
         background = new DoodleSpace.Background();
         player = new DoodleSpace.Player(1.5, 0);
+        spawner = new DoodleSpace.Spawner(settings.fps, 1);
         const canvas = document.querySelector("canvas");
         // worldNode.addChild(Quad);
         // worldNode.addChild(generateDummy());
@@ -36,23 +36,19 @@ var DoodleSpace;
         // console.log(cmpCamera);
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
-        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, fps);
+        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, loop);
     }
     function loop(_event) {
-        player.handleMovement(gameSpeed);
+        player.handleMovement(settings.gameSpeed);
         player.handleFiring(playerProjectiles);
-        playerProjectiles.handleMovement(gameSpeed * 1.2);
+        playerProjectiles.handleMovement(settings.gameSpeed * 1.2);
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);
-        enemies.handleMovement(gameSpeed / 4);
-        if (counter == fps) {
-            spawner.spawnEnemy(enemies);
-            counter = 0;
-        }
-        else {
-            counter++;
-        }
+        enemies.handleMovement(settings.gameSpeed / 4);
+        spawner.spawnEnemy(enemies);
+        if (player.health < 1)
+            ƒ.Loop.stop();
         // console.log(_event);
         // let rotSpeed: number = 90;
         // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;

@@ -2,12 +2,9 @@ namespace DoodleSpace {
     import ƒ = FudgeCore;
     window.addEventListener("load", init);
 
-    const fps: number = 60;
-    const gameSpeed: number = 10;
+    let settings: any;
 
-    let counter: number = 0;
-
-    let spawner: Spawner = new Spawner();
+    let spawner: Spawner;
 
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
@@ -18,10 +15,12 @@ namespace DoodleSpace {
     
     let viewport: ƒ.Viewport = new ƒ.Viewport();
     
-    function init(_event: Event): void {
+    async function init(_event: Event): Promise<void> {
+        settings = await (await fetch("./settings.json")).json();
 
         background = new Background();
         player = new Player(1.5, 0);
+        spawner = new Spawner(settings.fps, 1);
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
@@ -51,27 +50,26 @@ namespace DoodleSpace {
         viewport.draw();
 
         
-        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, fps);
+        
+
+        ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
         ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, loop);
     }
     
     function loop(_event: Event): void {
-        player.handleMovement(gameSpeed);
+        player.handleMovement(settings.gameSpeed);
         player.handleFiring(playerProjectiles);
 
-        playerProjectiles.handleMovement(gameSpeed*1.2);
+        playerProjectiles.handleMovement(settings.gameSpeed*1.2);
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);
-        enemies.handleMovement(gameSpeed/4);
+        enemies.handleMovement(settings.gameSpeed/4);
 
-        if (counter == fps){
-            spawner.spawnEnemy(enemies);
-            counter = 0;
-        }
-        else {
-            counter++;
-        }
+        spawner.spawnEnemy(enemies);
+
+        if(player.health < 1)
+            ƒ.Loop.stop();
 
         // console.log(_event);
         // let rotSpeed: number = 90;
