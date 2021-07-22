@@ -62,6 +62,7 @@ namespace DoodleSpace {
         playerProjectiles.handleMovement();
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
+        enemies.handleCollisionWithPlayer(player);
 
         // console.log(_event);
         // let rotSpeed: number = 90;

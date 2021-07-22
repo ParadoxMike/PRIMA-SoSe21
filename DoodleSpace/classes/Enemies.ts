@@ -25,7 +25,37 @@ namespace DoodleSpace {
         }
 
         public handleCollisionWithPlayer(_target: Player): void {
+            let asteroidsArray: Asteroid[] = this.asteroids.getChildren() as Asteroid[];
+            let ufosArray: UFO[] = this.ufos.getChildren() as UFO[];
 
+            //iterate through all asteroids and check collision with player
+            for (let j = 0; j < asteroidsArray.length; j++) {
+                if (_target.checkCollision(asteroidsArray[j])) {
+
+                    //decrease health by 1 for projectile and asteroid
+                    _target.health--;
+                    asteroidsArray[j].health--;
+
+                    //run checkHealth for both
+                    _target.checkHealth();
+                    asteroidsArray[j].checkHealth();
+                }
+                
+            }
+
+            //iterate through all ufos and check collision with player
+            for (let k = 0; k < ufosArray.length; k++) {
+                if (_target.checkCollision(ufosArray[k])) {
+
+                    //decrease health by 1 for projectile and ufo
+                    _target.health--;
+                    ufosArray[k].health--;
+
+                    //run checkHealth for both
+                    _target.checkHealth();
+                    ufosArray[k].checkHealth();
+                }
+            }
         }
 
         public handleCollisionWithPlayerProjectiles(playerProjectiles: PlayerProjectiles): void {

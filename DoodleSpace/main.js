@@ -44,6 +44,7 @@ var DoodleSpace;
         player.handleFiring(playerProjectiles);
         playerProjectiles.handleMovement();
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
+        enemies.handleCollisionWithPlayer(player);
         // console.log(_event);
         // let rotSpeed: number = 90;
         // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;

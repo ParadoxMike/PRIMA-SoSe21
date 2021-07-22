@@ -19,6 +19,30 @@ var DoodleSpace;
             this.ufos.addChild(new UFO(_atPos.x, _atPos.y));
         }
         handleCollisionWithPlayer(_target) {
+            let asteroidsArray = this.asteroids.getChildren();
+            let ufosArray = this.ufos.getChildren();
+            //iterate through all asteroids and check collision with player
+            for (let j = 0; j < asteroidsArray.length; j++) {
+                if (_target.checkCollision(asteroidsArray[j])) {
+                    //decrease health by 1 for projectile and asteroid
+                    _target.health--;
+                    asteroidsArray[j].health--;
+                    //run checkHealth for both
+                    _target.checkHealth();
+                    asteroidsArray[j].checkHealth();
+                }
+            }
+            //iterate through all ufos and check collision with player
+            for (let k = 0; k < ufosArray.length; k++) {
+                if (_target.checkCollision(ufosArray[k])) {
+                    //decrease health by 1 for projectile and ufo
+                    _target.health--;
+                    ufosArray[k].health--;
+                    //run checkHealth for both
+                    _target.checkHealth();
+                    ufosArray[k].checkHealth();
+                }
+            }
         }
         handleCollisionWithPlayerProjectiles(playerProjectiles) {
             //setup working arrays
