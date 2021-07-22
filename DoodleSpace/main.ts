@@ -5,6 +5,10 @@ namespace DoodleSpace {
     const fps: number = 60;
     const gameSpeed: number = 10;
 
+    let counter: number = 0;
+
+    let spawner: Spawner = new Spawner();
+
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
     let enemies: Enemies = new Enemies();
@@ -18,11 +22,6 @@ namespace DoodleSpace {
 
         background = new Background();
         player = new Player(1.5, 0);
-
-        enemies.spawnUFO(new ƒ.Vector2(6, 3));
-        enemies.spawnUFO(new ƒ.Vector2(30, 3));
-        enemies.spawnAsteroid(new ƒ.Vector2(9, -4));
-
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
@@ -60,11 +59,19 @@ namespace DoodleSpace {
         player.handleMovement(gameSpeed);
         player.handleFiring(playerProjectiles);
 
-        playerProjectiles.handleMovement(gameSpeed);
+        playerProjectiles.handleMovement(gameSpeed*1.2);
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);
         enemies.handleMovement(gameSpeed/4);
+
+        if (counter == fps){
+            spawner.spawnEnemy(enemies);
+            counter = 0;
+        }
+        else {
+            counter++;
+        }
 
         // console.log(_event);
         // let rotSpeed: number = 90;
