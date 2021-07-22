@@ -7,9 +7,15 @@ namespace DoodleSpace {
         private spawnAtX: number = 35;
         private counter: number = 0;
         private counterMax: number;
+        private fps: number;
 
         constructor(_fps: number, _spawnsPerSecond: number) {
-            this.counterMax = Math.floor(_fps / _spawnsPerSecond);
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / _spawnsPerSecond);
+        }
+
+        public adjustSpawnrate(_spawnsPerSecond: number): void {
+            this.counterMax = Math.floor(this.fps / _spawnsPerSecond);
         }
 
         private randomPos(): number {

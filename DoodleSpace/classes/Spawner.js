@@ -8,7 +8,11 @@ var DoodleSpace;
             this.spawnLimitBottom = -11.5;
             this.spawnAtX = 35;
             this.counter = 0;
-            this.counterMax = Math.floor(_fps / _spawnsPerSecond);
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / _spawnsPerSecond);
+        }
+        adjustSpawnrate(_spawnsPerSecond) {
+            this.counterMax = Math.floor(this.fps / _spawnsPerSecond);
         }
         randomPos() {
             return Math.floor(Math.random() * (this.spawnLimitTop - this.spawnLimitBottom + 1)) + this.spawnLimitBottom;
