@@ -4,8 +4,10 @@ var DoodleSpace;
     var ƒ = FudgeCore;
     //Basic class for moveable and textured Nodes with a Hitbox - is the base for every enemy and the player
     class BaseEntity extends ƒ.Node {
-        constructor(_spawnAtX, _spawnAtY, _xScale, _yScale, _name, _texturePath = "./textures/default.png") {
+        constructor(_spawnAtX, _spawnAtY, _xScale, _yScale, _name, _initHealth, _texturePath = "./textures/default.png") {
             super(_name);
+            //set initail health
+            this.health = _initHealth;
             //add transform component and move into possiton
             this.addComponent(new ƒ.ComponentTransform());
             this.mtxLocal.translateX(_spawnAtX);
@@ -28,6 +30,12 @@ var DoodleSpace;
         }
         checkCollision(_target) {
             return this.hitbox.collides(_target.hitbox);
+        }
+        checkHealth() {
+            if (this.health < 1) {
+                let parent = this.getParent();
+                parent.removeChild(this);
+            }
         }
         moveBy(_pos) {
             this.mtxLocal.translateX(_pos.x);

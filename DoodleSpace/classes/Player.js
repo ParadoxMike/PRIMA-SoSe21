@@ -4,7 +4,7 @@ var DoodleSpace;
     var ƒ = FudgeCore;
     class Player extends DoodleSpace.BaseEntity {
         constructor(_x, _y) {
-            super(_x, _y, 1.75, 1, "Player", "./textures/player.png");
+            super(_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");
             this.movementBorderTop = 11.5;
             this.movementBorderBottom = -11.5;
             this.movementBorderLeft = 1.5;

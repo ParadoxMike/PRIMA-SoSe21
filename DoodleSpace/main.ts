@@ -7,11 +7,10 @@ namespace DoodleSpace {
 
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
+    let enemies: Enemies = new Enemies();
     let background: Background;
     let player: Player;
-    
-    let ufo: EnemyType01;
-    let aseroid: EnemyType00;
+
     
     let viewport: ƒ.Viewport = new ƒ.Viewport();
     
@@ -20,8 +19,8 @@ namespace DoodleSpace {
         background = new Background();
         player = new Player(1.5, 0);
 
-        ufo = new EnemyType01(0, 6, 3);
-        aseroid = new EnemyType00(0, 9, -4);
+        enemies.spawnUFO(new ƒ.Vector2(6, 3));
+        enemies.spawnAsteroid(new ƒ.Vector2(9, -4));
 
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -31,8 +30,7 @@ namespace DoodleSpace {
         worldNode.addChild(background);
         worldNode.addChild(player);
         worldNode.addChild(playerProjectiles);
-        worldNode.addChild(ufo);
-        worldNode.addChild(aseroid);
+        worldNode.addChild(enemies);
         console.log(worldNode);
         
         // Quad.addComponent(new ƒ.ComponentTransform());
@@ -62,6 +60,8 @@ namespace DoodleSpace {
         player.handleFiring(playerProjectiles);
 
         playerProjectiles.handleMovement();
+
+        enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
 
         // console.log(_event);
         // let rotSpeed: number = 90;

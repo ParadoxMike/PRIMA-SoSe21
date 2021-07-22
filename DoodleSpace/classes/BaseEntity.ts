@@ -4,9 +4,13 @@ namespace DoodleSpace {
 
     export class BaseEntity extends ƒ.Node {
         public hitbox: ƒ.Rectangle;
+        public health: number;
 
-        constructor(_spawnAtX: number, _spawnAtY: number, _xScale: number, _yScale: number, _name: string, _texturePath: string = "./textures/default.png") {
+        constructor(_spawnAtX: number, _spawnAtY: number, _xScale: number, _yScale: number, _name: string, _initHealth: number, _texturePath: string = "./textures/default.png") {
             super(_name);
+
+            //set initail health
+            this.health = _initHealth;
             
             //add transform component and move into possiton
             this.addComponent(new ƒ.ComponentTransform());
@@ -35,6 +39,13 @@ namespace DoodleSpace {
 
         public checkCollision(_target: BaseEntity): boolean {
             return this.hitbox.collides(_target.hitbox);
+        }
+
+        public checkHealth(): void {
+            if(this.health < 1) {
+                let parent: ƒ.Node = this.getParent();
+                parent.removeChild(this);
+            }
         }
 
         public moveBy(_pos: ƒ.Vector2): void {

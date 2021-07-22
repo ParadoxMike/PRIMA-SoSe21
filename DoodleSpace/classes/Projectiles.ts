@@ -13,12 +13,12 @@ namespace DoodleSpace {
             return this.getChild(projectiles.length - 1) as PlayerProjectile;
         }
 
-        public spawnProjectilePlayer(playerObject: Player): void {
+        public spawnProjectilePlayer(_playerObject: Player): void {
             if (! this.getLastProjectile()) {
-                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
             }
-            else if (this.getLastProjectile().mtxLocal.translation.x > playerObject.mtxLocal.translation.x + 3) {
-                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+            else if (this.getLastProjectile().mtxLocal.translation.x > _playerObject.mtxLocal.translation.x + 3) {
+                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
             }
         }
 
@@ -46,15 +46,15 @@ namespace DoodleSpace {
         }
     }
 
-    class PlayerProjectile extends BaseEntity {
+    export class PlayerProjectile extends BaseEntity {
         constructor(_x: number, _y: number) {
-            super (_x, _y, 1, 0.22, "ProjectilePlayer", "./textures/projectile.png");
+            super (_x, _y, 1, 0.22, "ProjectilePlayer", 1, "./textures/projectile.png");
         }
     }
 
-    class EnemyProjectile extends BaseEntity {
+    export class EnemyProjectile extends BaseEntity {
         constructor(_x: number, _y: number) {
-            super (_x, _y, 1, 0.22, "ProjectileEnemy", "./textures/projectile.png");
+            super (_x, _y, 1, 0.22, "ProjectileEnemy",1, "./textures/projectile.png");
         }
     }
 }

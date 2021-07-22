@@ -8,7 +8,7 @@ namespace DoodleSpace {
         private movementBorderRight: number = 20;
 
         constructor(_x: number, _y: number) {
-            super (_x, _y, 1.75, 1, "Player", "./textures/player.png");
+            super (_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");
         }
 
         public handleMovement(): void {

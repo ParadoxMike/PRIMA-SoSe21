@@ -11,12 +11,12 @@ var DoodleSpace;
             const projectiles = this.getChildren();
             return this.getChild(projectiles.length - 1);
         }
-        spawnProjectilePlayer(playerObject) {
+        spawnProjectilePlayer(_playerObject) {
             if (!this.getLastProjectile()) {
-                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
             }
-            else if (this.getLastProjectile().mtxLocal.translation.x > playerObject.mtxLocal.translation.x + 3) {
-                this.addChild(new PlayerProjectile(playerObject.mtxLocal.translation.x + 1, playerObject.mtxLocal.translation.y));
+            else if (this.getLastProjectile().mtxLocal.translation.x > _playerObject.mtxLocal.translation.x + 3) {
+                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
             }
         }
         handleMovement() {
@@ -42,13 +42,15 @@ var DoodleSpace;
     DoodleSpace.EnemyProjectiles = EnemyProjectiles;
     class PlayerProjectile extends DoodleSpace.BaseEntity {
         constructor(_x, _y) {
-            super(_x, _y, 1, 0.22, "ProjectilePlayer", "./textures/projectile.png");
+            super(_x, _y, 1, 0.22, "ProjectilePlayer", 1, "./textures/projectile.png");
         }
     }
+    DoodleSpace.PlayerProjectile = PlayerProjectile;
     class EnemyProjectile extends DoodleSpace.BaseEntity {
         constructor(_x, _y) {
-            super(_x, _y, 1, 0.22, "ProjectileEnemy", "./textures/projectile.png");
+            super(_x, _y, 1, 0.22, "ProjectileEnemy", 1, "./textures/projectile.png");
         }
     }
+    DoodleSpace.EnemyProjectile = EnemyProjectile;
 })(DoodleSpace || (DoodleSpace = {}));
 //# sourceMappingURL=Projectiles.js.map
