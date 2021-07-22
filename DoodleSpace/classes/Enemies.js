@@ -5,6 +5,7 @@ var DoodleSpace;
     class Enemies extends ƒ.Node {
         constructor() {
             super("Enemies");
+            this.deleteAt = -1;
             //init sub nodes
             this.asteroids = new ƒ.Node("Ateroids");
             this.ufos = new ƒ.Node("UFOs");
@@ -72,6 +73,31 @@ var DoodleSpace;
                         projectilesArray[i].checkHealth();
                         ufosArray[k].checkHealth();
                     }
+                }
+            }
+        }
+        handleMovement(_speed) {
+            let asteroidsArray = this.asteroids.getChildren();
+            let ufosArray = this.ufos.getChildren();
+            const enemyOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
+            //iterate through all asteroids and move them
+            for (let i = 0; i < asteroidsArray.length; i++) {
+                const asteroidPos = asteroidsArray[i].getPos();
+                if (asteroidPos.x <= this.deleteAt) { //delete enemy if outside of screen
+                    this.asteroids.removeChild(asteroidsArray[i]);
+                }
+                else {
+                    asteroidsArray[i].moveBy(new ƒ.Vector2(-enemyOffset, 0));
+                }
+            }
+            //iterate through all ufos and move them
+            for (let j = 0; j < ufosArray.length; j++) {
+                const ufoPos = ufosArray[j].getPos();
+                if (ufoPos.x <= this.deleteAt) { //delete enemy if outside of screen
+                    this.ufos.removeChild(ufosArray[j]);
+                }
+                else {
+                    ufosArray[j].moveBy(new ƒ.Vector2(-enemyOffset, 0));
                 }
             }
         }

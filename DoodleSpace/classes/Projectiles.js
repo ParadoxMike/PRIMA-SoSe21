@@ -21,8 +21,8 @@ var DoodleSpace;
         }
         handleMovement(_speed) {
             let projectiles = this.getChildren();
+            const projectileOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
             for (let i = 0; i < projectiles.length; i++) {
-                const projectileOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
                 const projectilePos = projectiles[i].getPos();
                 if (projectilePos.x >= this.deleteAt) {
                     this.removeChild(projectiles[i]);

@@ -24,9 +24,9 @@ namespace DoodleSpace {
 
         public handleMovement(_speed: number): void {
             let projectiles: PlayerProjectile[] = this.getChildren() as PlayerProjectile[];
+            const projectileOffset: number = _speed * ƒ.Loop.timeFrameReal / 1000;
 
             for (let i = 0; i < projectiles.length; i++) {
-                const projectileOffset: number = _speed * ƒ.Loop.timeFrameReal / 1000;
                 const projectilePos: ƒ.Vector2 = projectiles[i].getPos();
                 
                 if (projectilePos.x >= this.deleteAt) {
