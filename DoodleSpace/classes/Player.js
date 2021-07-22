@@ -10,8 +10,8 @@ var DoodleSpace;
             this.movementBorderLeft = 1.5;
             this.movementBorderRight = 20;
         }
-        handleMovement() {
-            const playerOffset = DoodleSpace.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+        handleMovement(_speed) {
+            const playerOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
             const playerPos = this.getPos();
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A]) && playerPos.x >= this.movementBorderLeft) {
                 this.moveBy(new ƒ.Vector2(-playerOffset, 0));

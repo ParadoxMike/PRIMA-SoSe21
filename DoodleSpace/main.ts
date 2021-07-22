@@ -3,7 +3,7 @@ namespace DoodleSpace {
     window.addEventListener("load", init);
 
     const fps: number = 60;
-    export const gameSpeed: number = 10;
+    const gameSpeed: number = 10;
 
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
@@ -56,10 +56,10 @@ namespace DoodleSpace {
     }
     
     function loop(_event: Event): void {
-        player.handleMovement();
+        player.handleMovement(gameSpeed);
         player.handleFiring(playerProjectiles);
 
-        playerProjectiles.handleMovement();
+        playerProjectiles.handleMovement(gameSpeed);
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);

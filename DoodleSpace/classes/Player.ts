@@ -11,8 +11,8 @@ namespace DoodleSpace {
             super (_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");
         }
 
-        public handleMovement(): void {
-            const playerOffset: number = gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+        public handleMovement(_speed: number): void {
+            const playerOffset: number = _speed * ƒ.Loop.timeFrameReal / 1000;
             const playerPos: ƒ.Vector2 = this.getPos();
 
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.A]) && playerPos.x >= this.movementBorderLeft) {

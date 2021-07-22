@@ -19,10 +19,10 @@ var DoodleSpace;
                 this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
             }
         }
-        handleMovement() {
+        handleMovement(_speed) {
             let projectiles = this.getChildren();
             for (let i = 0; i < projectiles.length; i++) {
-                const projectileOffset = DoodleSpace.gameSpeed * ƒ.Loop.timeFrameReal / 1000;
+                const projectileOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
                 const projectilePos = projectiles[i].getPos();
                 if (projectilePos.x >= this.deleteAt) {
                     this.removeChild(projectiles[i]);

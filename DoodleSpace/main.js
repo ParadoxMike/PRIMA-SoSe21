@@ -4,7 +4,7 @@ var DoodleSpace;
     var ƒ = FudgeCore;
     window.addEventListener("load", init);
     const fps = 60;
-    DoodleSpace.gameSpeed = 10;
+    const gameSpeed = 10;
     let worldNode = new ƒ.Node("World Node");
     let playerProjectiles = new DoodleSpace.PlayerProjectiles();
     let enemies = new DoodleSpace.Enemies();
@@ -40,9 +40,9 @@ var DoodleSpace;
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, loop);
     }
     function loop(_event) {
-        player.handleMovement();
+        player.handleMovement(gameSpeed);
         player.handleFiring(playerProjectiles);
-        playerProjectiles.handleMovement();
+        playerProjectiles.handleMovement(gameSpeed);
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);
         // console.log(_event);
