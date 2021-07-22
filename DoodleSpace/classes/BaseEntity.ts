@@ -44,7 +44,8 @@ namespace DoodleSpace {
         public checkHealth(): void {
             if(this.health < 1) {
                 let parent: ƒ.Node = this.getParent();
-                parent.removeChild(this);
+                if(parent)
+                    parent.removeChild(this);
             }
         }
 

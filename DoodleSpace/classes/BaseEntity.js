@@ -34,7 +34,8 @@ var DoodleSpace;
         checkHealth() {
             if (this.health < 1) {
                 let parent = this.getParent();
-                parent.removeChild(this);
+                if (parent)
+                    parent.removeChild(this);
             }
         }
         moveBy(_pos) {
