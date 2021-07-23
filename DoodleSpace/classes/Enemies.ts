@@ -182,14 +182,18 @@ namespace DoodleSpace {
     class Asteroid extends BaseEntity {
         constructor(_x: number, _y: number, _health: number, _soundPath: string) {
             super (_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png", _soundPath);
-            this.sound.volume = 1;
+            if(this.sound.volume) {
+                this.sound.volume = 1;
+            }
         }
     }
 
     export class UFO extends BaseEntity {
         constructor(_x: number, _y: number, _health: number, _soundPath: string) {
             super (_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png", _soundPath);
-            this.sound.volume = 1;
+            if(this.sound.volume) {
+                this.sound.volume = 1;
+            }
         }
     }
 }

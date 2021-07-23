@@ -140,13 +140,17 @@ var DoodleSpace;
     class Asteroid extends DoodleSpace.BaseEntity {
         constructor(_x, _y, _health, _soundPath) {
             super(_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png", _soundPath);
-            this.sound.volume = 1;
+            if (this.sound.volume) {
+                this.sound.volume = 1;
+            }
         }
     }
     class UFO extends DoodleSpace.BaseEntity {
         constructor(_x, _y, _health, _soundPath) {
             super(_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png", _soundPath);
-            this.sound.volume = 1;
+            if (this.sound.volume) {
+                this.sound.volume = 1;
+            }
         }
     }
     DoodleSpace.UFO = UFO;
