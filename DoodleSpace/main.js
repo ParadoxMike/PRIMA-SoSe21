@@ -2,22 +2,37 @@
 var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
-    window.addEventListener("load", init);
+    window.addEventListener("load", load);
     let settings; //define settings object 
     let spawner; //define spawner object
     //define Nodes globally
-    let worldNode = new ƒ.Node("World Node");
-    let playerProjectiles = new DoodleSpace.PlayerProjectiles();
-    let enemyProjectiles = new DoodleSpace.EnemyProjectiles();
+    let worldNode;
+    let playerProjectiles;
+    let enemyProjectiles;
     let enemies;
     let background;
     let player;
     let healthPacks;
-    //define viewport
+    //define & init viewport
     let viewport = new ƒ.Viewport();
-    async function init(_event) {
+    async function load(_event) {
         settings = await (await fetch("./settings.json")).json(); //load settings from json into object
+        document.getElementById("btn_start").addEventListener("click", startBtn);
+        document.getElementById("btn_retry").addEventListener("click", retryBtn);
+    }
+    function startBtn(_event) {
+        init(_event);
+        document.getElementsByClassName("start_screen")[0].classList.add("inviasble");
+    }
+    function retryBtn(_event) {
+        init(_event);
+        document.getElementsByClassName("game_over_screen")[0].classList.remove("viasble");
+    }
+    function init(_event) {
         //initialize nodes 
+        worldNode = new ƒ.Node("World Node");
+        playerProjectiles = new DoodleSpace.PlayerProjectiles();
+        enemyProjectiles = new DoodleSpace.EnemyProjectiles();
         background = new DoodleSpace.Background();
         player = new DoodleSpace.Player(settings.fps, settings.player.shotsPerSecond);
         spawner = new DoodleSpace.Spawner(settings.fps, settings.enemy.spawnsPerSecond);
@@ -43,9 +58,9 @@ var DoodleSpace;
         viewport.draw();
         //start the loop
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
-        ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, loop);
+        ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, gameLoop);
     }
-    function loop(_event) {
+    function gameLoop(_event) {
         player.handleMovement(settings.gameSpeed * settings.player.speed);
         player.handleFiring(playerProjectiles);
         player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
@@ -57,8 +72,10 @@ var DoodleSpace;
         enemies.handleFiring(enemyProjectiles);
         healthPacks.handleCollisionWithPlayer(player);
         spawner.spawnEnemy(enemies);
-        if (player.health < 1) //temorary game stop when player dies
+        if (player.health < 1) { //temorary game stop when player dies
             ƒ.Loop.stop();
+            document.getElementsByClassName("game_over_screen")[0].classList.add("viasble");
+        }
         viewport.draw(); //draw the frame
         DoodleSpace.updateUI(player);
     }

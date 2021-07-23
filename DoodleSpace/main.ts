@@ -1,27 +1,44 @@
 namespace DoodleSpace {
     import ƒ = FudgeCore;
-    window.addEventListener("load", init);
-
+    window.addEventListener("load", load);
+    
     let settings: any; //define settings object 
-
+    
     let spawner: Spawner; //define spawner object
-
+    
     //define Nodes globally
-    let worldNode: ƒ.Node = new ƒ.Node("World Node");
-    let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
-    let enemyProjectiles: EnemyProjectiles = new EnemyProjectiles();
+    let worldNode: ƒ.Node;
+    let playerProjectiles: PlayerProjectiles;
+    let enemyProjectiles: EnemyProjectiles;
     let enemies: Enemies;
     let background: Background;
     let player: Player;
     let healthPacks: HealthPacks;
-
-    //define viewport
-    let viewport: ƒ.Viewport = new ƒ.Viewport();
     
-    async function init(_event: Event): Promise<void> {
-        settings = await (await fetch("./settings.json")).json(); //load settings from json into object
+    //define & init viewport
+    let viewport: ƒ.Viewport = new ƒ.Viewport();
 
+    async function load(_event: Event): Promise<void> {
+        settings = await (await fetch("./settings.json")).json(); //load settings from json into object
+        document.getElementById("btn_start").addEventListener("click", startBtn);
+        document.getElementById("btn_retry").addEventListener("click", retryBtn);
+    }
+
+    function startBtn(_event: Event): void {
+        init(_event);
+        document.getElementsByClassName("start_screen")[0].classList.add("inviasble");
+    }
+
+    function retryBtn(_event: Event): void {
+        init(_event);
+        document.getElementsByClassName("game_over_screen")[0].classList.remove("viasble");
+    }
+    
+    function init(_event: Event): void {
         //initialize nodes 
+        worldNode = new ƒ.Node("World Node");
+        playerProjectiles = new PlayerProjectiles();
+        enemyProjectiles = new EnemyProjectiles();
         background = new Background();
         player = new Player(settings.fps, settings.player.shotsPerSecond);
         spawner = new Spawner(settings.fps, settings.enemy.spawnsPerSecond);
@@ -52,10 +69,10 @@ namespace DoodleSpace {
 
         //start the loop
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
-        ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, loop);
+        ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, gameLoop);
     }
     
-    function loop(_event: Event): void {
+    function gameLoop(_event: Event): void {
         player.handleMovement(settings.gameSpeed * settings.player.speed);
         player.handleFiring(playerProjectiles);
         player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
@@ -72,8 +89,10 @@ namespace DoodleSpace {
 
         spawner.spawnEnemy(enemies);
 
-        if(player.health < 1) //temorary game stop when player dies
+        if(player.health < 1) { //temorary game stop when player dies
             ƒ.Loop.stop();
+            document.getElementsByClassName("game_over_screen")[0].classList.add("viasble");
+        }
 
         viewport.draw(); //draw the frame
 

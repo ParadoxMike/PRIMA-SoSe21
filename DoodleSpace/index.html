@@ -21,9 +21,29 @@
 <body>
     <h1>DoodleSpace</h1>
     <div class="ui_box">
-        <p>HP: <span id="health"></span></p>
+        <div class="ui_block">
+            <p>HP: <span id="health"></span></p>
+        </div>
+        <div class="ui_block">
+            
+        </div>
+        <div class="ui_block">
+            
+        </div>
+        <div class="ui_block">
+            
+        </div>
         
     </div>
-    <canvas class="canvas" width=1200 height=900></canvas>
+    <div class="game_area">
+        <canvas class="canvas"></canvas>
+        <div class="start_screen">
+            <button id="btn_start">START</button>
+        </div>
+        <div class="game_over_screen">
+            <h1>GAME OVER</h1>
+            <button id="btn_retry">RETRY</button>
+        </div>
+    </div>
 </body>
 </html>
