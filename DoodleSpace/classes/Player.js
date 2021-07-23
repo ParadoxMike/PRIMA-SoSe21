@@ -3,12 +3,15 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Player extends DoodleSpace.BaseEntity {
-        constructor(_x, _y) {
-            super(_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");
+        constructor(_fps, _shotsPerSecond) {
+            super(1.5, 0, 1.75, 1, "Player", 1, "./textures/player.png");
             this.movementBorderTop = 11.5;
             this.movementBorderBottom = -11.5;
             this.movementBorderLeft = 1.5;
             this.movementBorderRight = 32;
+            this.counter = 0;
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / _shotsPerSecond);
         }
         handleMovement(_speed) {
             const playerOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
@@ -27,8 +30,20 @@ var DoodleSpace;
             }
         }
         handleFiring(_projectiles) {
-            if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
-                _projectiles.spawnProjectilePlayer(this);
+            if (this.hasFiered) {
+                if (this.counter == this.counterMax) {
+                    this.counter = 0;
+                    this.hasFiered = false;
+                }
+                else {
+                    this.counter++;
+                }
+            }
+            else {
+                if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
+                    _projectiles.spawnProjectilePlayer(this);
+                    this.hasFiered = true;
+                }
             }
         }
         handleCollisionWithEnemyProjectiles(_enemyProjectiles) {

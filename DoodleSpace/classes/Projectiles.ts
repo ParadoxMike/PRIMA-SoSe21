@@ -7,19 +7,9 @@ namespace DoodleSpace {
         constructor() {
             super("Player Projectiles");
         }
-        
-        private getLastProjectile(): PlayerProjectile {
-            const projectiles: PlayerProjectile[] = this.getChildren() as PlayerProjectile[];
-            return this.getChild(projectiles.length - 1) as PlayerProjectile;
-        }
 
         public spawnProjectilePlayer(_playerObject: Player): void {
-            if (! this.getLastProjectile()) {
-                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
-            }
-            else if (this.getLastProjectile().mtxLocal.translation.x > _playerObject.mtxLocal.translation.x + 3) {
-                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
-            }
+            this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
         }
 
         public handleMovement(_speed: number): void {

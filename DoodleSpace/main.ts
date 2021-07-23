@@ -23,9 +23,9 @@ namespace DoodleSpace {
 
         //initialize nodes 
         background = new Background();
-        player = new Player(1.5, 0);
-        spawner = new Spawner(settings.fps, 1);
-        enemies = new Enemies(settings.fps, 5, 2, 3);
+        player = new Player(settings.fps, settings.player.shotsPerSecond);
+        spawner = new Spawner(settings.fps, settings.enemy.spawnsPerSecond);
+        enemies = new Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance);
         healthPacks = new HealthPacks();
 
         //get canves
@@ -56,16 +56,16 @@ namespace DoodleSpace {
     }
     
     function loop(_event: Event): void {
-        player.handleMovement(settings.gameSpeed);
+        player.handleMovement(settings.gameSpeed * settings.player.speed);
         player.handleFiring(playerProjectiles);
         player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
 
-        playerProjectiles.handleMovement(settings.gameSpeed*1.2);
-        enemyProjectiles.handleMovement(settings.gameSpeed*1.2);
+        playerProjectiles.handleMovement(settings.gameSpeed * settings.player.projectileSpeed);
+        enemyProjectiles.handleMovement(settings.gameSpeed * settings.enemy.projectileSpeed);
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles, healthPacks);
         enemies.handleCollisionWithPlayer(player);
-        enemies.handleMovement(settings.gameSpeed/4);
+        enemies.handleMovement(settings.gameSpeed * settings.enemy.speed);
         enemies.handleFiring(enemyProjectiles);
 
         healthPacks.handleCollisionWithPlayer(player);

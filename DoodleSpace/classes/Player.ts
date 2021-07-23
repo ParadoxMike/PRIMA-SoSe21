@@ -6,9 +6,16 @@ namespace DoodleSpace {
         private movementBorderBottom: number = -11.5;
         private movementBorderLeft: number = 1.5;
         private movementBorderRight: number = 32;
+        private fps: number;
+        private counter: number = 0;
+        private counterMax: number;
+        private hasFiered: boolean;
 
-        constructor(_x: number, _y: number) {
-            super (_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");
+        constructor(_fps: number, _shotsPerSecond: number) {
+            super (1.5, 0, 1.75, 1, "Player", 1, "./textures/player.png");
+
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / _shotsPerSecond);
         }
 
         public handleMovement(_speed: number): void {
@@ -33,9 +40,22 @@ namespace DoodleSpace {
         }
 
         public handleFiring(_projectiles: PlayerProjectiles): void {
-            if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
-                _projectiles.spawnProjectilePlayer(this);
+            if (this.hasFiered) {
+                if (this.counter ==  this.counterMax) {
+                    this.counter = 0;
+                    this.hasFiered = false;
+                }
+                else {
+                    this.counter++;
+                }
             }
+            else {
+                if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
+                    _projectiles.spawnProjectilePlayer(this);
+                    this.hasFiered = true;
+                }
+            }
+
         }
 
         public handleCollisionWithEnemyProjectiles(_enemyProjectiles: EnemyProjectiles): void {

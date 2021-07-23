@@ -7,17 +7,8 @@ var DoodleSpace;
             super("Player Projectiles");
             this.deleteAt = 33;
         }
-        getLastProjectile() {
-            const projectiles = this.getChildren();
-            return this.getChild(projectiles.length - 1);
-        }
         spawnProjectilePlayer(_playerObject) {
-            if (!this.getLastProjectile()) {
-                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
-            }
-            else if (this.getLastProjectile().mtxLocal.translation.x > _playerObject.mtxLocal.translation.x + 3) {
-                this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
-            }
+            this.addChild(new PlayerProjectile(_playerObject.mtxLocal.translation.x + 1, _playerObject.mtxLocal.translation.y));
         }
         handleMovement(_speed) {
             let projectiles = this.getChildren();
