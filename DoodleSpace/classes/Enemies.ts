@@ -12,8 +12,9 @@ namespace DoodleSpace {
         public healthPackChance: number;
         public asteroidHealth: number;
         public ufodHealth: number;
+        private soundPath: string;
 
-        constructor(_fps: number, shotsPerUfoPerSecond: number, _shotChance: number, _healthPackChance: number, _asteroidHealth: number, _ufoHealth:number) {
+        constructor(_fps: number, shotsPerUfoPerSecond: number, _shotChance: number, _healthPackChance: number, _asteroidHealth: number, _ufoHealth:number, _soundPath: string) {
             super("Enemies");
 
             //init sub nodes
@@ -29,6 +30,7 @@ namespace DoodleSpace {
             this.healthPackChance = _healthPackChance;
             this.asteroidHealth = _asteroidHealth;
             this.ufodHealth = _ufoHealth;
+            this.soundPath = _soundPath;
         }
 
         private randomizeShots(): number {
@@ -40,11 +42,11 @@ namespace DoodleSpace {
         }
 
         public spawnAsteroid(_atPos: ƒ.Vector2): void {
-            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth));
+            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth, this.soundPath));
         }
 
         public spawnUFO(_atPos: ƒ.Vector2): void {
-            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth));
+            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth, this.soundPath));
         }
 
         public handleCollisionWithPlayer(_target: Player): void {
@@ -101,8 +103,10 @@ namespace DoodleSpace {
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
                         asteroidsArray[j].checkHealth();
-                    }
-                    
+
+                        //play sound
+                        asteroidsArray[j].playSound();
+                    }  
                 }
 
                 //iterate through all ufos and check collision with current projectile
@@ -120,6 +124,9 @@ namespace DoodleSpace {
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
                         ufosArray[k].checkHealth();
+
+                        //play sound
+                        ufosArray[k].playSound();
                     }
                 }
             }
@@ -173,14 +180,16 @@ namespace DoodleSpace {
     }
 
     class Asteroid extends BaseEntity {
-        constructor(_x: number, _y: number, _health: number) {
-            super (_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png");
+        constructor(_x: number, _y: number, _health: number, _soundPath: string) {
+            super (_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png", _soundPath);
+            this.sound.volume = 1;
         }
     }
 
     export class UFO extends BaseEntity {
-        constructor(_x: number, _y: number, _health: number) {
-            super (_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png");
+        constructor(_x: number, _y: number, _health: number, _soundPath: string) {
+            super (_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png", _soundPath);
+            this.sound.volume = 1;
         }
     }
 }

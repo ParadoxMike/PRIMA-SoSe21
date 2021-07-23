@@ -26,12 +26,13 @@ var DoodleSpace;
     }
     DoodleSpace.PlayerProjectiles = PlayerProjectiles;
     class EnemyProjectiles extends ƒ.Node {
-        constructor() {
+        constructor(_soundPath) {
             super("Enemy Projectiles");
             this.deleteAt = 0;
+            this.soundPath = _soundPath;
         }
         spawnProjectileEnemy(_enemyObject) {
-            this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
+            this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y, this.soundPath));
         }
         handleMovement(_speed) {
             let projectiles = this.getChildren();
@@ -55,8 +56,9 @@ var DoodleSpace;
     }
     DoodleSpace.PlayerProjectile = PlayerProjectile;
     class EnemyProjectile extends DoodleSpace.BaseEntity {
-        constructor(_x, _y) {
-            super(_x, _y, 1, 0.22, "ProjectileEnemy", 1, "./textures/projectile.png");
+        constructor(_x, _y, _soundPath) {
+            super(_x, _y, 1, 0.22, "ProjectileEnemy", 1, "./textures/projectile.png", _soundPath);
+            this.sound.volume = 1;
         }
     }
     DoodleSpace.EnemyProjectile = EnemyProjectile;

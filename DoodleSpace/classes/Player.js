@@ -3,8 +3,8 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Player extends DoodleSpace.BaseEntity {
-        constructor(_fps, _shotsPerSecond) {
-            super(1.5, 0, 1.75, 1, "Player", 3, "./textures/player.png");
+        constructor(_fps, _shotsPerSecond, _soundPath) {
+            super(1.5, 0, 1.75, 1, "Player", 3, "./textures/player.png", _soundPath);
             this.movementBorderTop = 11.5;
             this.movementBorderBottom = -11.5;
             this.movementBorderLeft = 1.5;
@@ -42,6 +42,7 @@ var DoodleSpace;
             else {
                 if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
                     _projectiles.spawnProjectilePlayer(this);
+                    this.playSound();
                     this.hasFiered = true;
                 }
             }
@@ -58,6 +59,8 @@ var DoodleSpace;
                     //run checkHealth for both
                     projectilesArray[i].checkHealth();
                     this.checkHealth();
+                    //play sound
+                    projectilesArray[i].playSound();
                 }
             }
         }

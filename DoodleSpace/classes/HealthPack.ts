@@ -2,13 +2,16 @@ namespace DoodleSpace {
     import ƒ = FudgeCore;
 
     export class HealthPacks extends ƒ.Node {
-        constructor() {
+        private soundPath: string;
+
+        constructor(_soundPath: string) {
             super("HealthPacks");
 
+            this.soundPath = _soundPath;
         }
 
         public spawnHealthPack(_enemyObject: BaseEntity): void {
-            this.addChild(new HealthPack(_enemyObject.mtxLocal.translation.x, _enemyObject.mtxLocal.translation.y));
+            this.addChild(new HealthPack(_enemyObject.mtxLocal.translation.x, _enemyObject.mtxLocal.translation.y, this.soundPath));
         }
 
         public handleCollisionWithPlayer(_target: Player): void {
@@ -25,6 +28,9 @@ namespace DoodleSpace {
                     //run checkHealth for both
                     _target.checkHealth();
                     healthPacksArray[j].checkHealth();
+
+                    //play sound
+                    healthPacksArray[j].playSound();
                 }
                 
             }
@@ -32,8 +38,8 @@ namespace DoodleSpace {
     }
 
     export class HealthPack extends BaseEntity {
-        constructor(_x: number, _y: number) {
-            super (_x, _y, 1, 1, "HealthPack", 1, "./textures/health_pack.png");
+        constructor(_x: number, _y: number, _soundPath: string) {
+            super (_x, _y, 1, 1, "HealthPack", 1, "./textures/health_pack.png", _soundPath);
         }
     }
 }

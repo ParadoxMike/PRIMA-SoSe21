@@ -4,7 +4,7 @@ var DoodleSpace;
     var ƒ = FudgeCore;
     //Basic class for moveable and textured Nodes with a Hitbox - is the base for every enemy and the player
     class BaseEntity extends ƒ.Node {
-        constructor(_spawnAtX, _spawnAtY, _xScale, _yScale, _name, _initHealth, _texturePath = "./textures/default.png") {
+        constructor(_spawnAtX, _spawnAtY, _xScale, _yScale, _name, _initHealth, _texturePath = "./textures/default.png", _soundPath) {
             super(_name);
             //set initail health
             this.health = _initHealth;
@@ -27,6 +27,12 @@ var DoodleSpace;
             this.addComponent(cmpMaterial);
             //add and possition hitbox
             this.hitbox = new ƒ.Rectangle(_spawnAtX, _spawnAtY, _xScale, _yScale, ƒ.ORIGIN2D.CENTER);
+            //add sound if path is given
+            if (_soundPath && _soundPath != "noSound") {
+                this.sound = new ƒ.ComponentAudio(new ƒ.Audio(_soundPath), false, false);
+                this.sound.connect(true);
+                this.sound.volume = 0.5;
+            }
         }
         checkCollision(_target) {
             return this.hitbox.collides(_target.hitbox);
@@ -52,6 +58,10 @@ var DoodleSpace;
         }
         getPos() {
             return new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
+        }
+        playSound() {
+            if (this.sound)
+                this.sound.play(true);
         }
     }
     DoodleSpace.BaseEntity = BaseEntity;

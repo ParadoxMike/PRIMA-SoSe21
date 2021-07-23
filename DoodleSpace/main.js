@@ -6,6 +6,12 @@ var DoodleSpace;
     let settings; //define settings object 
     let spawner; //define spawner object
     let cmpAudioBackgroundMusic; //deffine background music component
+    let soundPaths = {
+        enemy_hit: "noSound",
+        hp_up: "noSound",
+        player_hit: "noSound",
+        shot: "noSound"
+    };
     //define Nodes globally
     let worldNode;
     let playerProjectiles;
@@ -37,7 +43,15 @@ var DoodleSpace;
             settings.enemy.ufoHealth = 3;
             settings.enemy.speed = 0.5;
         }
-        cmpAudioBackgroundMusic.play(soundSelect.value);
+        if (soundSelect.value == "1") {
+            cmpAudioBackgroundMusic.play(true);
+            soundPaths = {
+                enemy_hit: "./sounds/enemy_hit.wav",
+                hp_up: "./sounds/hp_up.mp3",
+                player_hit: "./sounds/player_hit.wav",
+                shot: "./sounds/shot.mp3"
+            };
+        }
         init(_event);
     }
     function retryBtn(_event) {
@@ -48,12 +62,12 @@ var DoodleSpace;
         //initialize nodes 
         worldNode = new ƒ.Node("World Node");
         playerProjectiles = new DoodleSpace.PlayerProjectiles();
-        enemyProjectiles = new DoodleSpace.EnemyProjectiles();
+        enemyProjectiles = new DoodleSpace.EnemyProjectiles(soundPaths.player_hit);
         background = new DoodleSpace.Background();
-        player = new DoodleSpace.Player(settings.fps, settings.player.shotsPerSecond);
+        player = new DoodleSpace.Player(settings.fps, settings.player.shotsPerSecond, soundPaths.shot);
         spawner = new DoodleSpace.Spawner(settings.fps, settings.enemy.spawnsPerSecond);
-        enemies = new DoodleSpace.Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth);
-        healthPacks = new DoodleSpace.HealthPacks();
+        enemies = new DoodleSpace.Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth, soundPaths.enemy_hit);
+        healthPacks = new DoodleSpace.HealthPacks(soundPaths.hp_up);
         //get canves
         const canvas = document.querySelector("canvas");
         //append all sub nodes to the worldNode

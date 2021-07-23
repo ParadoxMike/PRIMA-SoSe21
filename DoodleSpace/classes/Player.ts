@@ -11,8 +11,8 @@ namespace DoodleSpace {
         private counterMax: number;
         private hasFiered: boolean;
 
-        constructor(_fps: number, _shotsPerSecond: number) {
-            super (1.5, 0, 1.75, 1, "Player", 3, "./textures/player.png");
+        constructor(_fps: number, _shotsPerSecond: number, _soundPath: string) {
+            super (1.5, 0, 1.75, 1, "Player", 3, "./textures/player.png", _soundPath);
 
             this.fps = _fps;
             this.counterMax = Math.floor(this.fps / _shotsPerSecond);
@@ -52,6 +52,7 @@ namespace DoodleSpace {
             else {
                 if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
                     _projectiles.spawnProjectilePlayer(this);
+                    this.playSound();
                     this.hasFiered = true;
                 }
             }
@@ -73,6 +74,9 @@ namespace DoodleSpace {
                     //run checkHealth for both
                     projectilesArray[i].checkHealth();
                     this.checkHealth();
+
+                    //play sound
+                    projectilesArray[i].playSound();
                 }
             }
         }

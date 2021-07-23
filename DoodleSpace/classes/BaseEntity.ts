@@ -5,8 +5,9 @@ namespace DoodleSpace {
     export class BaseEntity extends ƒ.Node {
         public hitbox: ƒ.Rectangle;
         public health: number;
+        public sound: ƒ.ComponentAudio;
 
-        constructor(_spawnAtX: number, _spawnAtY: number, _xScale: number, _yScale: number, _name: string, _initHealth: number, _texturePath: string = "./textures/default.png") {
+        constructor(_spawnAtX: number, _spawnAtY: number, _xScale: number, _yScale: number, _name: string, _initHealth: number, _texturePath: string = "./textures/default.png", _soundPath?: string) {
             super(_name);
 
             //set initail health
@@ -35,6 +36,13 @@ namespace DoodleSpace {
 
             //add and possition hitbox
             this.hitbox = new ƒ.Rectangle(_spawnAtX, _spawnAtY, _xScale, _yScale, ƒ.ORIGIN2D.CENTER);
+
+            //add sound if path is given
+            if(_soundPath && _soundPath != "noSound") {
+                this.sound = new ƒ.ComponentAudio(new ƒ.Audio(_soundPath), false, false);
+                this.sound.connect(true);
+                this.sound.volume = 0.5;
+            }
         }
 
         public checkCollision(_target: BaseEntity): boolean {
@@ -65,6 +73,11 @@ namespace DoodleSpace {
 
         public getPos(): ƒ.Vector2 {
             return new ƒ.Vector2(this.mtxLocal.translation.x, this.mtxLocal.translation.y);
+        }
+
+        public playSound(): void {
+            if (this.sound)
+                this.sound.play(true);
         }
     }
 }

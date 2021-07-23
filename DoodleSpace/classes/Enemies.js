@@ -3,7 +3,7 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Enemies extends ƒ.Node {
-        constructor(_fps, shotsPerUfoPerSecond, _shotChance, _healthPackChance, _asteroidHealth, _ufoHealth) {
+        constructor(_fps, shotsPerUfoPerSecond, _shotChance, _healthPackChance, _asteroidHealth, _ufoHealth, _soundPath) {
             super("Enemies");
             this.deleteAt = -1;
             this.counter = 0;
@@ -19,6 +19,7 @@ var DoodleSpace;
             this.healthPackChance = _healthPackChance;
             this.asteroidHealth = _asteroidHealth;
             this.ufodHealth = _ufoHealth;
+            this.soundPath = _soundPath;
         }
         randomizeShots() {
             return Math.floor(Math.random() * this.shotChance);
@@ -27,10 +28,10 @@ var DoodleSpace;
             return Math.floor(Math.random() * this.healthPackChance);
         }
         spawnAsteroid(_atPos) {
-            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth));
+            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth, this.soundPath));
         }
         spawnUFO(_atPos) {
-            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth));
+            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth, this.soundPath));
         }
         handleCollisionWithPlayer(_target) {
             let asteroidsArray = this.asteroids.getChildren();
@@ -74,6 +75,8 @@ var DoodleSpace;
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
                         asteroidsArray[j].checkHealth();
+                        //play sound
+                        asteroidsArray[j].playSound();
                     }
                 }
                 //iterate through all ufos and check collision with current projectile
@@ -88,6 +91,8 @@ var DoodleSpace;
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
                         ufosArray[k].checkHealth();
+                        //play sound
+                        ufosArray[k].playSound();
                     }
                 }
             }
@@ -133,13 +138,15 @@ var DoodleSpace;
     }
     DoodleSpace.Enemies = Enemies;
     class Asteroid extends DoodleSpace.BaseEntity {
-        constructor(_x, _y, _health) {
-            super(_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png");
+        constructor(_x, _y, _health, _soundPath) {
+            super(_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png", _soundPath);
+            this.sound.volume = 1;
         }
     }
     class UFO extends DoodleSpace.BaseEntity {
-        constructor(_x, _y, _health) {
-            super(_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png");
+        constructor(_x, _y, _health, _soundPath) {
+            super(_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png", _soundPath);
+            this.sound.volume = 1;
         }
     }
     DoodleSpace.UFO = UFO;

@@ -7,6 +7,13 @@ namespace DoodleSpace {
     let spawner: Spawner; //define spawner object
 
     let cmpAudioBackgroundMusic: ƒ.ComponentAudio; //deffine background music component
+
+    let soundPaths = {
+        enemy_hit: "noSound",
+        hp_up: "noSound",
+        player_hit: "noSound",
+        shot: "noSound"
+    };
     
     //define Nodes globally
     let worldNode: ƒ.Node;
@@ -46,7 +53,16 @@ namespace DoodleSpace {
             settings.enemy.speed = 0.5
         }
 
-        cmpAudioBackgroundMusic.play(soundSelect.value as unknown as boolean);
+        if (soundSelect.value == "1") {
+            cmpAudioBackgroundMusic.play(true);
+            soundPaths = {
+                enemy_hit: "./sounds/enemy_hit.wav",
+                hp_up: "./sounds/hp_up.mp3",
+                player_hit: "./sounds/player_hit.wav",
+                shot: "./sounds/shot.mp3"
+            };
+        }
+        
 
         init(_event);
     }
@@ -60,12 +76,12 @@ namespace DoodleSpace {
         //initialize nodes 
         worldNode = new ƒ.Node("World Node");
         playerProjectiles = new PlayerProjectiles();
-        enemyProjectiles = new EnemyProjectiles();
+        enemyProjectiles = new EnemyProjectiles(soundPaths.player_hit);
         background = new Background();
-        player = new Player(settings.fps, settings.player.shotsPerSecond);
+        player = new Player(settings.fps, settings.player.shotsPerSecond, soundPaths.shot);
         spawner = new Spawner(settings.fps, settings.enemy.spawnsPerSecond);
-        enemies = new Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth);
-        healthPacks = new HealthPacks();
+        enemies = new Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth, soundPaths.enemy_hit);
+        healthPacks = new HealthPacks(soundPaths.hp_up);
 
         //get canves
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
