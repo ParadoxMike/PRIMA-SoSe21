@@ -47,18 +47,7 @@ namespace DoodleSpace {
             
         }
 
-        // private getLastProjectile(): EnemyProjectile {
-        //     const projectiles: EnemyProjectile[] = this.getChildren() as EnemyProjectile[];
-        //     return this.getChild(projectiles.length - 1) as EnemyProjectile;
-        // }
-
         public spawnProjectileEnemy(_enemyObject: UFO): void {
-            // if (! this.getLastProjectile()) {
-            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
-            // }
-            // else if (this.getLastProjectile().mtxLocal.translation.x < _enemyObject.mtxLocal.translation.x - 3) {
-            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
-            // }
             this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
         }
 

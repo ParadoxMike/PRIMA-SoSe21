@@ -16,9 +16,6 @@ var DoodleSpace;
             this.fps = _fps;
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
         }
-        // private chooseUFO(): number {
-        //     return Math.floor(Math.random() * this.ufos.nChildren);
-        // }
         randomizeShots() {
             return Math.floor(Math.random() * 2);
         }

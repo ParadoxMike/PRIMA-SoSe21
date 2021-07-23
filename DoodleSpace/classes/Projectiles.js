@@ -39,17 +39,7 @@ var DoodleSpace;
             super("Enemy Projectiles");
             this.deleteAt = 0;
         }
-        // private getLastProjectile(): EnemyProjectile {
-        //     const projectiles: EnemyProjectile[] = this.getChildren() as EnemyProjectile[];
-        //     return this.getChild(projectiles.length - 1) as EnemyProjectile;
-        // }
         spawnProjectileEnemy(_enemyObject) {
-            // if (! this.getLastProjectile()) {
-            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
-            // }
-            // else if (this.getLastProjectile().mtxLocal.translation.x < _enemyObject.mtxLocal.translation.x - 3) {
-            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
-            // }
             this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
         }
         handleMovement(_speed) {

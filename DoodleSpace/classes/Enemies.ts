@@ -23,10 +23,6 @@ namespace DoodleSpace {
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
         }
 
-        // private chooseUFO(): number {
-        //     return Math.floor(Math.random() * this.ufos.nChildren);
-        // }
-
         private randomizeShots(): number {
             return Math.floor(Math.random() * 2);
         }
