@@ -2,10 +2,11 @@ namespace DoodleSpace {
     import ƒ = FudgeCore;
     window.addEventListener("load", init);
 
-    let settings: any;
+    let settings: any; //define settings object 
 
-    let spawner: Spawner;
+    let spawner: Spawner; //define spawner object
 
+    //define Nodes globally
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
     let enemyProjectiles: EnemyProjectiles = new EnemyProjectiles();
@@ -13,45 +14,40 @@ namespace DoodleSpace {
     let background: Background;
     let player: Player;
 
-    
+    //define viewport
     let viewport: ƒ.Viewport = new ƒ.Viewport();
     
     async function init(_event: Event): Promise<void> {
-        settings = await (await fetch("./settings.json")).json();
+        settings = await (await fetch("./settings.json")).json(); //load settings from json into object
 
+        //initialize nodes 
         background = new Background();
         player = new Player(1.5, 0);
         spawner = new Spawner(settings.fps, 1);
         enemies = new Enemies(settings.fps, 5);
 
+        //get canves
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
-        // worldNode.addChild(Quad);
-        // worldNode.addChild(generateDummy());
+        //append all sub nodes to the worldNode
         worldNode.addChild(background);
         worldNode.addChild(player);
         worldNode.addChild(playerProjectiles);
         worldNode.addChild(enemyProjectiles);
         worldNode.addChild(enemies);
         console.log(worldNode);
-        
-        // Quad.addComponent(new ƒ.ComponentTransform());
 
-        // Quad.addComponent(new ƒ.ComponentMesh(meshQuad));
-
-        // let material: ƒ.Material = new ƒ.Material("Florian", ƒ.ShaderUniColor, new ƒ.CoatColored(new ƒ.Color(0, 1, 0, 1)));
-        // let cmpMaterial: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(material);
-        // Quad.addComponent(cmpMaterial);
-
+        //setup Camera
         let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
         cmpCamera.mtxPivot.translateZ(35);
         cmpCamera.mtxPivot.translateX(16.8);
         cmpCamera.mtxPivot.rotateY(180);
-        // console.log(cmpCamera);
 
+        //init viewport and draw for the first time
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
 
+        //start the loop
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
         ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, loop);
     }
@@ -71,13 +67,9 @@ namespace DoodleSpace {
 
         spawner.spawnEnemy(enemies);
 
-        if(player.health < 1)
+        if(player.health < 1) //temorary game stop when player dies
             ƒ.Loop.stop();
 
-        // console.log(_event);
-        // let rotSpeed: number = 90;
-        // let secondsSinceLastFrame: number = ƒ.Loop.timeFrameReal / 1000;
-        // player.getComponent(ƒ.ComponentMesh).mtxPivot.rotateZ(rotSpeed * secondsSinceLastFrame);
-        viewport.draw();
+        viewport.draw(); //draw the frame
     }
 }
