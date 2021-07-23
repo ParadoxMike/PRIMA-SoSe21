@@ -76,5 +76,7 @@ namespace DoodleSpace {
             ƒ.Loop.stop();
 
         viewport.draw(); //draw the frame
+
+        updateUI(player);
     }
 }

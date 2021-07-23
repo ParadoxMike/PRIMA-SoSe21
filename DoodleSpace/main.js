@@ -60,6 +60,7 @@ var DoodleSpace;
         if (player.health < 1) //temorary game stop when player dies
             ƒ.Loop.stop();
         viewport.draw(); //draw the frame
+        DoodleSpace.updateUI(player);
     }
 })(DoodleSpace || (DoodleSpace = {}));
 //# sourceMappingURL=main.js.map
