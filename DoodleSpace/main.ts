@@ -59,6 +59,7 @@ namespace DoodleSpace {
     function loop(_event: Event): void {
         player.handleMovement(settings.gameSpeed);
         player.handleFiring(playerProjectiles);
+        player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
 
         playerProjectiles.handleMovement(settings.gameSpeed*1.2);
         enemyProjectiles.handleMovement(settings.gameSpeed*1.2);

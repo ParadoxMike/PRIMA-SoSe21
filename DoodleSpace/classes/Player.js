@@ -31,6 +31,21 @@ var DoodleSpace;
                 _projectiles.spawnProjectilePlayer(this);
             }
         }
+        handleCollisionWithEnemyProjectiles(_enemyProjectiles) {
+            //setup working arrays
+            let projectilesArray = _enemyProjectiles.getChildren();
+            //iterate through all enemy projectiles
+            for (let i = 0; i < projectilesArray.length; i++) {
+                if (projectilesArray[i].checkCollision(this)) {
+                    //decrease health by 1 for projectile and player
+                    projectilesArray[i].health--;
+                    this.health--;
+                    //run checkHealth for both
+                    projectilesArray[i].checkHealth();
+                    this.checkHealth();
+                }
+            }
+        }
     }
     DoodleSpace.Player = Player;
 })(DoodleSpace || (DoodleSpace = {}));

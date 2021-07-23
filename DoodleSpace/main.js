@@ -45,6 +45,7 @@ var DoodleSpace;
     function loop(_event) {
         player.handleMovement(settings.gameSpeed);
         player.handleFiring(playerProjectiles);
+        player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
         playerProjectiles.handleMovement(settings.gameSpeed * 1.2);
         enemyProjectiles.handleMovement(settings.gameSpeed * 1.2);
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);

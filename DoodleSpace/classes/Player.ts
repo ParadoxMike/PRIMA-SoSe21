@@ -32,9 +32,28 @@ namespace DoodleSpace {
             }
         }
 
-        public handleFiring (_projectiles: PlayerProjectiles): void {
+        public handleFiring(_projectiles: PlayerProjectiles): void {
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
                 _projectiles.spawnProjectilePlayer(this);
+            }
+        }
+
+        public handleCollisionWithEnemyProjectiles(_enemyProjectiles: EnemyProjectiles): void {
+            //setup working arrays
+            let projectilesArray: EnemyProjectile[] = _enemyProjectiles.getChildren() as EnemyProjectile[];
+
+            //iterate through all enemy projectiles
+            for (let i = 0; i < projectilesArray.length; i++) {
+                if (projectilesArray[i].checkCollision(this)) {
+
+                    //decrease health by 1 for projectile and player
+                    projectilesArray[i].health--;
+                    this.health--;
+
+                    //run checkHealth for both
+                    projectilesArray[i].checkHealth();
+                    this.checkHealth();
+                }
             }
         }
     }
