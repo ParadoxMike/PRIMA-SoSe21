@@ -3,7 +3,7 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Enemies extends ƒ.Node {
-        constructor(_fps, shotsPerUfoPerSecond) {
+        constructor(_fps, shotsPerUfoPerSecond, _shotChance, _healthPackChance) {
             super("Enemies");
             this.deleteAt = -1;
             this.counter = 0;
@@ -15,12 +15,14 @@ var DoodleSpace;
             this.addChild(this.ufos);
             this.fps = _fps;
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
+            this.shotChance = _shotChance;
+            this.healthPackChance = _healthPackChance;
         }
         randomizeShots() {
-            return Math.floor(Math.random() * 2);
+            return Math.floor(Math.random() * this.shotChance);
         }
-        healthPackChance() {
-            return Math.floor(Math.random() * 3);
+        healthPackSpawnChance() {
+            return Math.floor(Math.random() * this.healthPackChance);
         }
         spawnAsteroid(_atPos) {
             this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
@@ -79,7 +81,7 @@ var DoodleSpace;
                         projectilesArray[i].health--;
                         ufosArray[k].health--;
                         //ceck if ufo health is below 1 if true spawn health pack by chance
-                        if (ufosArray[k].health < 1 && this.healthPackChance())
+                        if (ufosArray[k].health < 1 && !this.healthPackSpawnChance())
                             _healthPacks.spawnHealthPack(ufosArray[k]);
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();

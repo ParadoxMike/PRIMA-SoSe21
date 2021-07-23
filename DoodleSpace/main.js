@@ -21,7 +21,7 @@ var DoodleSpace;
         background = new DoodleSpace.Background();
         player = new DoodleSpace.Player(1.5, 0);
         spawner = new DoodleSpace.Spawner(settings.fps, 1);
-        enemies = new DoodleSpace.Enemies(settings.fps, 5);
+        enemies = new DoodleSpace.Enemies(settings.fps, 5, 2, 3);
         healthPacks = new DoodleSpace.HealthPacks();
         //get canves
         const canvas = document.querySelector("canvas");

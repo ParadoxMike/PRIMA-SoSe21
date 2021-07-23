@@ -25,7 +25,7 @@ namespace DoodleSpace {
         background = new Background();
         player = new Player(1.5, 0);
         spawner = new Spawner(settings.fps, 1);
-        enemies = new Enemies(settings.fps, 5);
+        enemies = new Enemies(settings.fps, 5, 2, 3);
         healthPacks = new HealthPacks();
 
         //get canves

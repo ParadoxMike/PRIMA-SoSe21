@@ -8,8 +8,10 @@ namespace DoodleSpace {
         private counter: number = 0;
         private counterMax: number;
         private fps: number;
+        public shotChance: number;
+        public healthPackChance: number;
 
-        constructor(_fps: number, shotsPerUfoPerSecond: number) {
+        constructor(_fps: number, shotsPerUfoPerSecond: number, _shotChance: number, _healthPackChance: number) {
             super("Enemies");
 
             //init sub nodes
@@ -21,14 +23,16 @@ namespace DoodleSpace {
 
             this.fps = _fps;
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
+            this.shotChance = _shotChance;
+            this.healthPackChance = _healthPackChance;
         }
 
         private randomizeShots(): number {
-            return Math.floor(Math.random() * 2);
+            return Math.floor(Math.random() * this.shotChance);
         }
 
-        private healthPackChance(): number {
-            return Math.floor(Math.random() * 3);
+        private healthPackSpawnChance(): number {
+            return Math.floor(Math.random() * this.healthPackChance);
         }
 
         public spawnAsteroid(_atPos: ƒ.Vector2): void {
@@ -106,7 +110,7 @@ namespace DoodleSpace {
                         ufosArray[k].health--;
 
                         //ceck if ufo health is below 1 if true spawn health pack by chance
-                        if (ufosArray[k].health < 1 && this.healthPackChance())
+                        if (ufosArray[k].health < 1 && ! this.healthPackSpawnChance())
                             _healthPacks.spawnHealthPack(ufosArray[k]);
 
                         //run checkHealth for both
