@@ -38,6 +38,17 @@
     <div class="game_area">
         <canvas class="canvas"></canvas>
         <div class="start_screen">
+            <label for="difficulty">Set difficulty:</label>
+            <select name="difficulty" id="difficulty">
+                <option value="1" selected="selected">NORMAL</option>
+                <option value="2">MEDIUM</option>
+                <option value="3">HARD</option>
+            </select>
+            <label for="music">Sound?</label>
+            <select name="music" id="music">
+                <option value="1">ON</option>
+                <option value="0" selected="selected">OFF</option>
+            </select>
             <button id="btn_start">START</button>
         </div>
         <div class="game_over_screen">
