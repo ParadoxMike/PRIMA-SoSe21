@@ -5,6 +5,8 @@ namespace DoodleSpace {
     let settings: any; //define settings object 
     
     let spawner: Spawner; //define spawner object
+
+    let cmpAudioBackgroundMusic: ƒ.ComponentAudio; //deffine background music component
     
     //define Nodes globally
     let worldNode: ƒ.Node;
@@ -22,6 +24,9 @@ namespace DoodleSpace {
         settings = await (await fetch("./settings.json")).json(); //load settings from json into object
         document.getElementById("btn_start").addEventListener("click", startBtn);
         document.getElementById("btn_retry").addEventListener("click", retryBtn);
+        
+        cmpAudioBackgroundMusic = new ƒ.ComponentAudio(new ƒ.Audio("./sounds/background_music.mp3"), true, false);
+        cmpAudioBackgroundMusic.connect(true);
     }
 
     function startBtn(_event: Event): void {
@@ -40,6 +45,8 @@ namespace DoodleSpace {
             settings.enemy.ufoHealth = 3;
             settings.enemy.speed = 0.5
         }
+
+        cmpAudioBackgroundMusic.play(soundSelect.value as unknown as boolean);
 
         init(_event);
     }

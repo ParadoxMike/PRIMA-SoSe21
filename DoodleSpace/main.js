@@ -5,6 +5,7 @@ var DoodleSpace;
     window.addEventListener("load", load);
     let settings; //define settings object 
     let spawner; //define spawner object
+    let cmpAudioBackgroundMusic; //deffine background music component
     //define Nodes globally
     let worldNode;
     let playerProjectiles;
@@ -19,6 +20,8 @@ var DoodleSpace;
         settings = await (await fetch("./settings.json")).json(); //load settings from json into object
         document.getElementById("btn_start").addEventListener("click", startBtn);
         document.getElementById("btn_retry").addEventListener("click", retryBtn);
+        cmpAudioBackgroundMusic = new ƒ.ComponentAudio(new ƒ.Audio("./sounds/background_music.mp3"), true, false);
+        cmpAudioBackgroundMusic.connect(true);
     }
     function startBtn(_event) {
         const difficulty = document.getElementById("difficulty");
@@ -34,6 +37,7 @@ var DoodleSpace;
             settings.enemy.ufoHealth = 3;
             settings.enemy.speed = 0.5;
         }
+        cmpAudioBackgroundMusic.play(soundSelect.value);
         init(_event);
     }
     function retryBtn(_event) {
