@@ -19,6 +19,9 @@ var DoodleSpace;
         randomizeShots() {
             return Math.floor(Math.random() * 2);
         }
+        healthPackChance() {
+            return Math.floor(Math.random() * 3);
+        }
         spawnAsteroid(_atPos) {
             this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
         }
@@ -51,11 +54,11 @@ var DoodleSpace;
                 }
             }
         }
-        handleCollisionWithPlayerProjectiles(playerProjectiles) {
+        handleCollisionWithPlayerProjectiles(_playerProjectiles, _healthPacks) {
             //setup working arrays
             let asteroidsArray = this.asteroids.getChildren();
             let ufosArray = this.ufos.getChildren();
-            let projectilesArray = playerProjectiles.getChildren();
+            let projectilesArray = _playerProjectiles.getChildren();
             //iterate through all player projectiles
             for (let i = 0; i < projectilesArray.length; i++) {
                 //iterate through all asteroids and check collision with current projectile
@@ -75,6 +78,9 @@ var DoodleSpace;
                         //decrease health by 1 for projectile and ufo
                         projectilesArray[i].health--;
                         ufosArray[k].health--;
+                        //ceck if ufo health is below 1 if true spawn health pack by chance
+                        if (ufosArray[k].health < 1 && this.healthPackChance())
+                            _healthPacks.spawnHealthPack(ufosArray[k]);
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
                         ufosArray[k].checkHealth();

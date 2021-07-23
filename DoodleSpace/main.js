@@ -12,6 +12,7 @@ var DoodleSpace;
     let enemies;
     let background;
     let player;
+    let healthPacks;
     //define viewport
     let viewport = new ƒ.Viewport();
     async function init(_event) {
@@ -21,6 +22,7 @@ var DoodleSpace;
         player = new DoodleSpace.Player(1.5, 0);
         spawner = new DoodleSpace.Spawner(settings.fps, 1);
         enemies = new DoodleSpace.Enemies(settings.fps, 5);
+        healthPacks = new DoodleSpace.HealthPacks();
         //get canves
         const canvas = document.querySelector("canvas");
         //append all sub nodes to the worldNode
@@ -29,6 +31,7 @@ var DoodleSpace;
         worldNode.addChild(playerProjectiles);
         worldNode.addChild(enemyProjectiles);
         worldNode.addChild(enemies);
+        worldNode.addChild(healthPacks);
         console.log(worldNode);
         //setup Camera
         let cmpCamera = new ƒ.ComponentCamera();
@@ -48,10 +51,11 @@ var DoodleSpace;
         player.handleCollisionWithEnemyProjectiles(enemyProjectiles);
         playerProjectiles.handleMovement(settings.gameSpeed * 1.2);
         enemyProjectiles.handleMovement(settings.gameSpeed * 1.2);
-        enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
+        enemies.handleCollisionWithPlayerProjectiles(playerProjectiles, healthPacks);
         enemies.handleCollisionWithPlayer(player);
         enemies.handleMovement(settings.gameSpeed / 4);
         enemies.handleFiring(enemyProjectiles);
+        healthPacks.handleCollisionWithPlayer(player);
         spawner.spawnEnemy(enemies);
         if (player.health < 1) //temorary game stop when player dies
             ƒ.Loop.stop();

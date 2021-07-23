@@ -27,6 +27,10 @@ namespace DoodleSpace {
             return Math.floor(Math.random() * 2);
         }
 
+        private healthPackChance(): number {
+            return Math.floor(Math.random() * 3);
+        }
+
         public spawnAsteroid(_atPos: ƒ.Vector2): void {
             this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
         }
@@ -69,11 +73,11 @@ namespace DoodleSpace {
             }
         }
 
-        public handleCollisionWithPlayerProjectiles(playerProjectiles: PlayerProjectiles): void {
+        public handleCollisionWithPlayerProjectiles(_playerProjectiles: PlayerProjectiles, _healthPacks: HealthPacks): void {
             //setup working arrays
             let asteroidsArray: Asteroid[] = this.asteroids.getChildren() as Asteroid[];
             let ufosArray: UFO[] = this.ufos.getChildren() as UFO[];
-            let projectilesArray: PlayerProjectile[] = playerProjectiles.getChildren() as PlayerProjectile[];
+            let projectilesArray: PlayerProjectile[] = _playerProjectiles.getChildren() as PlayerProjectile[];
 
             //iterate through all player projectiles
             for (let i = 0; i < projectilesArray.length; i++) {
@@ -100,6 +104,10 @@ namespace DoodleSpace {
                         //decrease health by 1 for projectile and ufo
                         projectilesArray[i].health--;
                         ufosArray[k].health--;
+
+                        //ceck if ufo health is below 1 if true spawn health pack by chance
+                        if (ufosArray[k].health < 1 && this.healthPackChance())
+                            _healthPacks.spawnHealthPack(ufosArray[k]);
 
                         //run checkHealth for both
                         projectilesArray[i].checkHealth();
@@ -145,10 +153,8 @@ namespace DoodleSpace {
             if (this.counter ==  this.counterMax) {
                 for (let i = 0; i < ufosArray.length; i++) {
                     if (this.randomizeShots())
-                        _projectiles.spawnProjectileEnemy(ufosArray[i]);
-                    
+                        _projectiles.spawnProjectileEnemy(ufosArray[i]);   
                 }
-
                 this.counter = 0;
             }
             else {

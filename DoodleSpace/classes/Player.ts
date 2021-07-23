@@ -5,7 +5,7 @@ namespace DoodleSpace {
         private movementBorderTop: number = 11.5;
         private movementBorderBottom: number = -11.5;
         private movementBorderLeft: number = 1.5;
-        private movementBorderRight: number = 20;
+        private movementBorderRight: number = 32;
 
         constructor(_x: number, _y: number) {
             super (_x, _y, 1.75, 1, "Player", 1, "./textures/player.png");

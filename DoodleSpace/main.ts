@@ -13,6 +13,7 @@ namespace DoodleSpace {
     let enemies: Enemies;
     let background: Background;
     let player: Player;
+    let healthPacks: HealthPacks;
 
     //define viewport
     let viewport: ƒ.Viewport = new ƒ.Viewport();
@@ -25,6 +26,7 @@ namespace DoodleSpace {
         player = new Player(1.5, 0);
         spawner = new Spawner(settings.fps, 1);
         enemies = new Enemies(settings.fps, 5);
+        healthPacks = new HealthPacks();
 
         //get canves
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -35,6 +37,7 @@ namespace DoodleSpace {
         worldNode.addChild(playerProjectiles);
         worldNode.addChild(enemyProjectiles);
         worldNode.addChild(enemies);
+        worldNode.addChild(healthPacks);
         console.log(worldNode);
 
         //setup Camera
@@ -60,10 +63,12 @@ namespace DoodleSpace {
         playerProjectiles.handleMovement(settings.gameSpeed*1.2);
         enemyProjectiles.handleMovement(settings.gameSpeed*1.2);
 
-        enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
+        enemies.handleCollisionWithPlayerProjectiles(playerProjectiles, healthPacks);
         enemies.handleCollisionWithPlayer(player);
         enemies.handleMovement(settings.gameSpeed/4);
         enemies.handleFiring(enemyProjectiles);
+
+        healthPacks.handleCollisionWithPlayer(player);
 
         spawner.spawnEnemy(enemies);
 

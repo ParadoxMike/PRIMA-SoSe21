@@ -8,7 +8,7 @@ var DoodleSpace;
             this.movementBorderTop = 11.5;
             this.movementBorderBottom = -11.5;
             this.movementBorderLeft = 1.5;
-            this.movementBorderRight = 20;
+            this.movementBorderRight = 32;
         }
         handleMovement(_speed) {
             const playerOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
