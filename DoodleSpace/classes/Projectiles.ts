@@ -69,7 +69,7 @@ namespace DoodleSpace {
     export class EnemyProjectile extends BaseEntity {
         constructor(_x: number, _y: number, _soundPath: string) {
             super (_x, _y, 1, 0.22, "ProjectileEnemy",1, "./textures/projectile.png", _soundPath);
-            if(this.sound.volume) {
+            if(this.sound) {
                 this.sound.volume = 1;
             }
         }

@@ -58,7 +58,7 @@ var DoodleSpace;
     class EnemyProjectile extends DoodleSpace.BaseEntity {
         constructor(_x, _y, _soundPath) {
             super(_x, _y, 1, 0.22, "ProjectileEnemy", 1, "./textures/projectile.png", _soundPath);
-            if (this.sound.volume) {
+            if (this.sound) {
                 this.sound.volume = 1;
             }
         }
