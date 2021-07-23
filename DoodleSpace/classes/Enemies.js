@@ -3,15 +3,24 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Enemies extends ƒ.Node {
-        constructor() {
+        constructor(_fps, shotsPerUfoPerSecond) {
             super("Enemies");
             this.deleteAt = -1;
+            this.counter = 0;
             //init sub nodes
             this.asteroids = new ƒ.Node("Ateroids");
             this.ufos = new ƒ.Node("UFOs");
             //add as children
             this.addChild(this.asteroids);
             this.addChild(this.ufos);
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
+        }
+        // private chooseUFO(): number {
+        //     return Math.floor(Math.random() * this.ufos.nChildren);
+        // }
+        randomizeShots() {
+            return Math.floor(Math.random() * 2);
         }
         spawnAsteroid(_atPos) {
             this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
@@ -101,6 +110,19 @@ var DoodleSpace;
                 }
             }
         }
+        handleFiring(_projectiles) {
+            let ufosArray = this.ufos.getChildren();
+            if (this.counter == this.counterMax) {
+                for (let i = 0; i < ufosArray.length; i++) {
+                    if (this.randomizeShots())
+                        _projectiles.spawnProjectileEnemy(ufosArray[i]);
+                }
+                this.counter = 0;
+            }
+            else {
+                this.counter++;
+            }
+        }
     }
     DoodleSpace.Enemies = Enemies;
     class Asteroid extends DoodleSpace.BaseEntity {
@@ -113,5 +135,6 @@ var DoodleSpace;
             super(_x, _y, 1.6, 1, "UFO", 1, "./textures/enemy_ufo.png");
         }
     }
+    DoodleSpace.UFO = UFO;
 })(DoodleSpace || (DoodleSpace = {}));
 //# sourceMappingURL=Enemies.js.map

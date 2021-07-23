@@ -8,7 +8,8 @@ namespace DoodleSpace {
 
     let worldNode: ƒ.Node = new ƒ.Node("World Node");
     let playerProjectiles: PlayerProjectiles = new PlayerProjectiles();
-    let enemies: Enemies = new Enemies();
+    let enemyProjectiles: EnemyProjectiles = new EnemyProjectiles();
+    let enemies: Enemies;
     let background: Background;
     let player: Player;
 
@@ -21,6 +22,7 @@ namespace DoodleSpace {
         background = new Background();
         player = new Player(1.5, 0);
         spawner = new Spawner(settings.fps, 1);
+        enemies = new Enemies(settings.fps, 5);
 
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
 
@@ -29,6 +31,7 @@ namespace DoodleSpace {
         worldNode.addChild(background);
         worldNode.addChild(player);
         worldNode.addChild(playerProjectiles);
+        worldNode.addChild(enemyProjectiles);
         worldNode.addChild(enemies);
         console.log(worldNode);
         
@@ -49,9 +52,6 @@ namespace DoodleSpace {
         viewport.initialize("Viewport", worldNode, cmpCamera, canvas);
         viewport.draw();
 
-        
-        
-
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_REAL, settings.fps);
         ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, loop);
     }
@@ -61,10 +61,12 @@ namespace DoodleSpace {
         player.handleFiring(playerProjectiles);
 
         playerProjectiles.handleMovement(settings.gameSpeed*1.2);
+        enemyProjectiles.handleMovement(settings.gameSpeed*1.2);
 
         enemies.handleCollisionWithPlayerProjectiles(playerProjectiles);
         enemies.handleCollisionWithPlayer(player);
         enemies.handleMovement(settings.gameSpeed/4);
+        enemies.handleFiring(enemyProjectiles);
 
         spawner.spawnEnemy(enemies);
 

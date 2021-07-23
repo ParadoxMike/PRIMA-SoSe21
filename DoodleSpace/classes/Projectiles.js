@@ -37,6 +37,33 @@ var DoodleSpace;
     class EnemyProjectiles extends ƒ.Node {
         constructor() {
             super("Enemy Projectiles");
+            this.deleteAt = 0;
+        }
+        // private getLastProjectile(): EnemyProjectile {
+        //     const projectiles: EnemyProjectile[] = this.getChildren() as EnemyProjectile[];
+        //     return this.getChild(projectiles.length - 1) as EnemyProjectile;
+        // }
+        spawnProjectileEnemy(_enemyObject) {
+            // if (! this.getLastProjectile()) {
+            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
+            // }
+            // else if (this.getLastProjectile().mtxLocal.translation.x < _enemyObject.mtxLocal.translation.x - 3) {
+            //     this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
+            // }
+            this.addChild(new EnemyProjectile(_enemyObject.mtxLocal.translation.x - 1, _enemyObject.mtxLocal.translation.y));
+        }
+        handleMovement(_speed) {
+            let projectiles = this.getChildren();
+            const projectileOffset = _speed * ƒ.Loop.timeFrameReal / 1000;
+            for (let i = 0; i < projectiles.length; i++) {
+                const projectilePos = projectiles[i].getPos();
+                if (projectilePos.x <= this.deleteAt) {
+                    this.removeChild(projectiles[i]);
+                }
+                else {
+                    projectiles[i].moveBy(new ƒ.Vector2(-projectileOffset, 0));
+                }
+            }
         }
     }
     DoodleSpace.EnemyProjectiles = EnemyProjectiles;

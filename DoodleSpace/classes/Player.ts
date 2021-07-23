@@ -32,9 +32,9 @@ namespace DoodleSpace {
             }
         }
 
-        public handleFiring (projectiles: PlayerProjectiles): void {
+        public handleFiring (_projectiles: PlayerProjectiles): void {
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
-                projectiles.spawnProjectilePlayer(this);
+                _projectiles.spawnProjectilePlayer(this);
             }
         }
     }

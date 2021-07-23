@@ -5,8 +5,11 @@ namespace DoodleSpace {
         private deleteAt: number = -1;
         private asteroids: ƒ.Node;
         private ufos: ƒ.Node;
+        private counter: number = 0;
+        private counterMax: number;
+        private fps: number;
 
-        constructor() {
+        constructor(_fps: number, shotsPerUfoPerSecond: number) {
             super("Enemies");
 
             //init sub nodes
@@ -15,6 +18,17 @@ namespace DoodleSpace {
             //add as children
             this.addChild(this.asteroids);
             this.addChild(this.ufos);
+
+            this.fps = _fps;
+            this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
+        }
+
+        // private chooseUFO(): number {
+        //     return Math.floor(Math.random() * this.ufos.nChildren);
+        // }
+
+        private randomizeShots(): number {
+            return Math.floor(Math.random() * 2);
         }
 
         public spawnAsteroid(_atPos: ƒ.Vector2): void {
@@ -128,6 +142,24 @@ namespace DoodleSpace {
                 } 
             }
         }
+
+        public handleFiring(_projectiles: EnemyProjectiles): void {
+            let ufosArray: UFO[] = this.ufos.getChildren() as UFO[];
+            
+            if (this.counter ==  this.counterMax) {
+                for (let i = 0; i < ufosArray.length; i++) {
+                    if (this.randomizeShots())
+                        _projectiles.spawnProjectileEnemy(ufosArray[i]);
+                    
+                }
+
+                this.counter = 0;
+            }
+            else {
+                this.counter++;
+            }
+            
+        } 
     }
 
     class Asteroid extends BaseEntity {
@@ -136,7 +168,7 @@ namespace DoodleSpace {
         }
     }
 
-    class UFO extends BaseEntity {
+    export class UFO extends BaseEntity {
         constructor(_x: number, _y: number) {
             super (_x, _y, 1.6, 1, "UFO", 1, "./textures/enemy_ufo.png");
         }

@@ -26,9 +26,9 @@ var DoodleSpace;
                 this.moveBy(new ƒ.Vector2(0, -playerOffset));
             }
         }
-        handleFiring(projectiles) {
+        handleFiring(_projectiles) {
             if (ƒ.Keyboard.isPressedOne([ƒ.KEYBOARD_CODE.SPACE])) {
-                projectiles.spawnProjectilePlayer(this);
+                _projectiles.spawnProjectilePlayer(this);
             }
         }
     }
