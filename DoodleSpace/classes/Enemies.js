@@ -3,7 +3,7 @@ var DoodleSpace;
 (function (DoodleSpace) {
     var ƒ = FudgeCore;
     class Enemies extends ƒ.Node {
-        constructor(_fps, shotsPerUfoPerSecond, _shotChance, _healthPackChance) {
+        constructor(_fps, shotsPerUfoPerSecond, _shotChance, _healthPackChance, _asteroidHealth, _ufoHealth) {
             super("Enemies");
             this.deleteAt = -1;
             this.counter = 0;
@@ -17,6 +17,8 @@ var DoodleSpace;
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
             this.shotChance = _shotChance;
             this.healthPackChance = _healthPackChance;
+            this.asteroidHealth = _asteroidHealth;
+            this.ufodHealth = _ufoHealth;
         }
         randomizeShots() {
             return Math.floor(Math.random() * this.shotChance);
@@ -25,10 +27,10 @@ var DoodleSpace;
             return Math.floor(Math.random() * this.healthPackChance);
         }
         spawnAsteroid(_atPos) {
-            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
+            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth));
         }
         spawnUFO(_atPos) {
-            this.ufos.addChild(new UFO(_atPos.x, _atPos.y));
+            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth));
         }
         handleCollisionWithPlayer(_target) {
             let asteroidsArray = this.asteroids.getChildren();
@@ -131,13 +133,13 @@ var DoodleSpace;
     }
     DoodleSpace.Enemies = Enemies;
     class Asteroid extends DoodleSpace.BaseEntity {
-        constructor(_x, _y) {
-            super(_x, _y, 1, 1, "Asteroid", 1, "./textures/enemy_asteroid.png");
+        constructor(_x, _y, _health) {
+            super(_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png");
         }
     }
     class UFO extends DoodleSpace.BaseEntity {
-        constructor(_x, _y) {
-            super(_x, _y, 1.6, 1, "UFO", 1, "./textures/enemy_ufo.png");
+        constructor(_x, _y, _health) {
+            super(_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png");
         }
     }
     DoodleSpace.UFO = UFO;

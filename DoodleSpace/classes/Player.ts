@@ -12,7 +12,7 @@ namespace DoodleSpace {
         private hasFiered: boolean;
 
         constructor(_fps: number, _shotsPerSecond: number) {
-            super (1.5, 0, 1.75, 1, "Player", 1, "./textures/player.png");
+            super (1.5, 0, 1.75, 1, "Player", 3, "./textures/player.png");
 
             this.fps = _fps;
             this.counterMax = Math.floor(this.fps / _shotsPerSecond);

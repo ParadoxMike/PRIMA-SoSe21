@@ -10,8 +10,10 @@ namespace DoodleSpace {
         private fps: number;
         public shotChance: number;
         public healthPackChance: number;
+        public asteroidHealth: number;
+        public ufodHealth: number;
 
-        constructor(_fps: number, shotsPerUfoPerSecond: number, _shotChance: number, _healthPackChance: number) {
+        constructor(_fps: number, shotsPerUfoPerSecond: number, _shotChance: number, _healthPackChance: number, _asteroidHealth: number, _ufoHealth:number) {
             super("Enemies");
 
             //init sub nodes
@@ -25,6 +27,8 @@ namespace DoodleSpace {
             this.counterMax = Math.floor(this.fps / shotsPerUfoPerSecond);
             this.shotChance = _shotChance;
             this.healthPackChance = _healthPackChance;
+            this.asteroidHealth = _asteroidHealth;
+            this.ufodHealth = _ufoHealth;
         }
 
         private randomizeShots(): number {
@@ -36,11 +40,11 @@ namespace DoodleSpace {
         }
 
         public spawnAsteroid(_atPos: ƒ.Vector2): void {
-            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y));
+            this.asteroids.addChild(new Asteroid(_atPos.x, _atPos.y, this.asteroidHealth));
         }
 
         public spawnUFO(_atPos: ƒ.Vector2): void {
-            this.ufos.addChild(new UFO(_atPos.x, _atPos.y));
+            this.ufos.addChild(new UFO(_atPos.x, _atPos.y, this.ufodHealth));
         }
 
         public handleCollisionWithPlayer(_target: Player): void {
@@ -169,14 +173,14 @@ namespace DoodleSpace {
     }
 
     class Asteroid extends BaseEntity {
-        constructor(_x: number, _y: number) {
-            super (_x, _y, 1, 1, "Asteroid", 1, "./textures/enemy_asteroid.png");
+        constructor(_x: number, _y: number, _health: number) {
+            super (_x, _y, 1, 1, "Asteroid", _health, "./textures/enemy_asteroid.png");
         }
     }
 
     export class UFO extends BaseEntity {
-        constructor(_x: number, _y: number) {
-            super (_x, _y, 1.6, 1, "UFO", 1, "./textures/enemy_ufo.png");
+        constructor(_x: number, _y: number, _health: number) {
+            super (_x, _y, 1.6, 1, "UFO", _health, "./textures/enemy_ufo.png");
         }
     }
 }

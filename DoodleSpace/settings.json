@@ -14,6 +14,8 @@
         "healthPackChance": 3,
         "projectileSpeed": 1.2,
         "speed": 0.25,
-        "spawnsPerSecond": 1
+        "spawnsPerSecond": 1,
+        "asteroidHealth": 1,
+        "ufoHealth": 1
     }
 }

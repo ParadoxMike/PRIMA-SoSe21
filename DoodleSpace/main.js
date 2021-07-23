@@ -21,8 +21,20 @@ var DoodleSpace;
         document.getElementById("btn_retry").addEventListener("click", retryBtn);
     }
     function startBtn(_event) {
-        init(_event);
+        const difficulty = document.getElementById("difficulty");
+        const soundSelect = document.getElementById("sound");
         document.getElementsByClassName("start_screen")[0].classList.add("inviasble");
+        if (difficulty.value == 2) {
+            settings.enemy.spawnsPerSecond = 2;
+            settings.enemy.ufoHealth = 2;
+        }
+        else if (difficulty.value == 3) {
+            settings.enemy.spawnsPerSecond = 2;
+            settings.enemy.asteroidHealth = 2;
+            settings.enemy.ufoHealth = 3;
+            settings.enemy.speed = 0.5;
+        }
+        init(_event);
     }
     function retryBtn(_event) {
         init(_event);
@@ -36,7 +48,7 @@ var DoodleSpace;
         background = new DoodleSpace.Background();
         player = new DoodleSpace.Player(settings.fps, settings.player.shotsPerSecond);
         spawner = new DoodleSpace.Spawner(settings.fps, settings.enemy.spawnsPerSecond);
-        enemies = new DoodleSpace.Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance);
+        enemies = new DoodleSpace.Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth);
         healthPacks = new DoodleSpace.HealthPacks();
         //get canves
         const canvas = document.querySelector("canvas");

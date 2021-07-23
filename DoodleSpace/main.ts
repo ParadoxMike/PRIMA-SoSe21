@@ -25,8 +25,23 @@ namespace DoodleSpace {
     }
 
     function startBtn(_event: Event): void {
-        init(_event);
+        const difficulty: HTMLSelectElement = document.getElementById("difficulty") as HTMLSelectElement;
+        const soundSelect: HTMLSelectElement = document.getElementById("sound") as HTMLSelectElement;
+
         document.getElementsByClassName("start_screen")[0].classList.add("inviasble");
+        
+        if (difficulty.value as unknown as number == 2) {
+            settings.enemy.spawnsPerSecond = 2;
+            settings.enemy.ufoHealth = 2;
+        }
+        else if (difficulty.value as unknown as number  == 3) {
+            settings.enemy.spawnsPerSecond = 2;
+            settings.enemy.asteroidHealth = 2;
+            settings.enemy.ufoHealth = 3;
+            settings.enemy.speed = 0.5
+        }
+
+        init(_event);
     }
 
     function retryBtn(_event: Event): void {
@@ -42,7 +57,7 @@ namespace DoodleSpace {
         background = new Background();
         player = new Player(settings.fps, settings.player.shotsPerSecond);
         spawner = new Spawner(settings.fps, settings.enemy.spawnsPerSecond);
-        enemies = new Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance);
+        enemies = new Enemies(settings.fps, settings.enemy.shotsPerSecond, settings.enemy.shotChance, settings.enemy.healthPackChance, settings.enemy.asteroidHealth, settings.enemy.ufoHealth);
         healthPacks = new HealthPacks();
 
         //get canves
