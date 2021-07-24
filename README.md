@@ -5,6 +5,9 @@ Repository for the module "Prototyping interactive media-applications and games"
 [Repo-Version](https://github.com/ParadoxMike/PRIMA-SoSe21)
 
 - [DoodleSpace](https://paradoxmike.github.io/PRIMA-SoSe21/DoodleSpace/index.html) Note: only works in a Chromium Browser
+- [Designdokument](./DoodleSpace/doku/Designdokument DoodleSpace - PRIMA SoSe2021.pdf)
+- [Zip Download](https://github.com/ParadoxMike/PRIMA-SoSe21/archive/refs/heads/master.zip)
+- [Source Code](https://github.com/ParadoxMike/PRIMA-SoSe21/tree/master/DoodleSpace)
 
 
 ## Checkliste für Leistungsnachweis
