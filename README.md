@@ -2,6 +2,7 @@
 Repository for the module "Prototyping interactive media-applications and games" at Furtwangen University
 
 [Pages-Version](https://paradoxmike.github.io/PRIMA-SoSe21/)
+[Repo-Version](https://github.com/ParadoxMike/PRIMA-SoSe21)
 
 - [DoodleSpace](https://paradoxmike.github.io/PRIMA-SoSe21/DoodleSpace/index.html) Note: only works in a Chromium Browser
 
